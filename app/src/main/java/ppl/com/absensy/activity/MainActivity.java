@@ -1,7 +1,8 @@
-package ppl.com.absensy;
+package ppl.com.absensy.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import ppl.com.absensy.R;
 
 public class MainActivity extends AppCompatActivity {
 
