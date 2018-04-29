@@ -87,6 +87,13 @@ public class SqliteHelper extends SQLiteOpenHelper {
         new String[]{String.valueOf(mataKuliah.getId())});
   }
 
+  public int deleteMataKuliah(MataKuliah mataKuliah){
+    SQLiteDatabase db = this.getWritableDatabase();
+    int status = db.delete(TABLE_MATA_KULIAH, ID_MATA_KULIAH + " = ?", new String[]{String.valueOf(mataKuliah.getId())});
+    db.close();
+    return status;
+  }
+
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATA_KULIAH);
