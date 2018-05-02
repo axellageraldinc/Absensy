@@ -76,6 +76,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
         cursor.getString(cursor.getColumnIndex(NAMA_MATA_KULIAH)),
         cursor.getInt(cursor.getColumnIndex(JUMLAH_KOSONG)));
     cursor.close();
+    db.close();
     return mataKuliah;
   }
 
@@ -83,8 +84,10 @@ public class SqliteHelper extends SQLiteOpenHelper {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues cv = new ContentValues();
     cv.put(JUMLAH_KOSONG, mataKuliah.getJumlahKosong());
-    return db.update(TABLE_MATA_KULIAH, cv, ID_MATA_KULIAH + " = ?",
-        new String[]{String.valueOf(mataKuliah.getId())});
+    int rowsAffected = db.update(TABLE_MATA_KULIAH, cv, ID_MATA_KULIAH + " = ?",
+            new String[]{String.valueOf(mataKuliah.getId())});
+    db.close();
+    return rowsAffected;
   }
 
   public int deleteMataKuliah(MataKuliah mataKuliah){
