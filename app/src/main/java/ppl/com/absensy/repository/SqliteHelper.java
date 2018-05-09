@@ -63,23 +63,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
     return mataKuliahList;
   }
 
-  public MataKuliah getOneMataKuliah(String mataKuliahId){
-    SQLiteDatabase db = this.getWritableDatabase();
-    Cursor cursor = db.query(TABLE_MATA_KULIAH,
-        new String[]{ID_MATA_KULIAH, NAMA_MATA_KULIAH, JUMLAH_KOSONG},
-        ID_MATA_KULIAH + "=?",
-        new String[]{String.valueOf(mataKuliahId)}, null, null, null, null);
-    if (cursor != null)
-      cursor.moveToFirst();
-    MataKuliah mataKuliah = new MataKuliah(
-        cursor.getString(cursor.getColumnIndex(ID_MATA_KULIAH)),
-        cursor.getString(cursor.getColumnIndex(NAMA_MATA_KULIAH)),
-        cursor.getInt(cursor.getColumnIndex(JUMLAH_KOSONG)));
-    cursor.close();
-    db.close();
-    return mataKuliah;
-  }
-
   public int updateJumlahKosongMataKuliah(MataKuliah mataKuliah){
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues cv = new ContentValues();
