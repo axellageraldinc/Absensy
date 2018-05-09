@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_mata_kuliah, parent);
+                .inflate(R.layout.list_mata_kuliah, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,7 +42,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
         MataKuliah mataKuliah = listMataKuliah.get(position);
         holder.txtId.setText(mataKuliah.getNama());
         holder.txtMatkul.setText(mataKuliah.getNama());
-        holder.txtKosong.setText(mataKuliah.getJumlahKosong());
+        holder.txtKosong.setText(String.valueOf(mataKuliah.getJumlahKosong()));
     }
 
     @Override
@@ -86,6 +87,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
         private Dialog createDialogAbsen() {
             final MataKuliah mataKuliah = listMataKuliah.get(getLayoutPosition());
             final Dialog dialog = new Dialog(view.getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.dialog_absen_matkul);
             dialog.setCancelable(true);
             TextView txtJumlahAbsen = dialog.findViewById(R.id.txtJumlahKosong);
@@ -98,6 +100,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
                     int jumlahKosong = mataKuliah.getJumlahKosong();
                     mataKuliah.setJumlahKosong(jumlahKosong+1);
                     sqliteHelper.updateJumlahKosongMataKuliah(mataKuliah);
+                    notifyDataSetChanged();
                     dialog.dismiss();
                 }
             });

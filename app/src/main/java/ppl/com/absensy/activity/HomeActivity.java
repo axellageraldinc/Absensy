@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import ppl.com.absensy.R;
 import ppl.com.absensy.model.MataKuliah;
 import ppl.com.absensy.repository.SqliteHelper;
 
-public class HomeActivity extends AppCompatActivity implements Button.OnClickListener {
+public class HomeActivity extends AppCompatActivity {
 
     private SqliteHelper sqliteHelper;
 
@@ -42,6 +43,14 @@ public class HomeActivity extends AppCompatActivity implements Button.OnClickLis
 
         sqliteHelper = new SqliteHelper(getApplicationContext());
 
+        btnAddMataKuliah = findViewById(R.id.btnAddMataKuliah);
+        btnAddMataKuliah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogAddMataKuliah.show();
+            }
+        });
+
         initRecyclerView();
         initDialogAddMataKuliah();
     }
@@ -56,20 +65,15 @@ public class HomeActivity extends AppCompatActivity implements Button.OnClickLis
 
     private void initDialogAddMataKuliah(){
         dialogAddMataKuliah = new Dialog(HomeActivity.this);
-        dialogAddMataKuliah.setContentView(R.layout.dialog_add_matkul);
         dialogAddMataKuliah.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogAddMataKuliah.setContentView(R.layout.dialog_add_matkul);
         dialogAddMataKuliah.setCancelable(true);
         txtInputNamaMataKuliah = dialogAddMataKuliah.findViewById(R.id.txtInputMataKuliah);
         txtInputJumlahKosongMataKuliah = dialogAddMataKuliah.findViewById(R.id.txtInputJumlahKosong);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnAddMataKuliah:
-                dialogAddMataKuliah.show();
-                break;
-            case R.id.btnSimpanMataKuliah:
+        btnSimpanMataKuliah = dialogAddMataKuliah.findViewById(R.id.btnSimpanMataKuliah);
+        btnSimpanMataKuliah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 long status = saveMataKuliahToSqliteDatabase(getUserInputOfMataKuliah());
                 if(status!=-1){
                     resetInputMataKuliah();
@@ -78,8 +82,8 @@ public class HomeActivity extends AppCompatActivity implements Button.OnClickLis
                 } else{
                     Toast.makeText(HomeActivity.this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
                 }
-                break;
-        }
+            }
+        });
     }
 
     private void resetInputMataKuliah(){
@@ -98,9 +102,9 @@ public class HomeActivity extends AppCompatActivity implements Button.OnClickLis
         return sqliteHelper.saveMataKuliah(mataKuliah);
     }
 
-    private void setDataToArrayList(List<MataKuliah> listMataKuliah) {
+    private void setDataToArrayList(List<MataKuliah> list) {
         listMataKuliah.clear();
-        listMataKuliah.addAll(listMataKuliah);
+        listMataKuliah.addAll(list);
     }
 
     private void refreshAdapter() {
