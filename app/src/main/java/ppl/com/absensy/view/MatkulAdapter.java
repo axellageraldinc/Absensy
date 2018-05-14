@@ -1,4 +1,4 @@
-package ppl.com.absensy;
+package ppl.com.absensy.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,17 +16,23 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ppl.com.absensy.R;
+import ppl.com.absensy.component.DaggerMatkulAdapterPresenterComponent;
+import ppl.com.absensy.contract.MatkulAdapterContract;
 import ppl.com.absensy.model.MataKuliah;
-import ppl.com.absensy.repository.SqliteHelper;
+import ppl.com.absensy.module.MatkulAdapterPresenterModule;
 
 public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder> {
 
     private List<MataKuliah> listMataKuliah;
-    private SqliteHelper sqliteHelper;
+    private MatkulAdapterContract.Presenter matkulAdapterPresenter;
 
     public MatkulAdapter(List<MataKuliah> listMataKuliah, Context context) {
         this.listMataKuliah = listMataKuliah;
-        sqliteHelper = new SqliteHelper(context);
+        matkulAdapterPresenter = DaggerMatkulAdapterPresenterComponent.builder()
+                .matkulAdapterPresenterModule(new MatkulAdapterPresenterModule(context))
+                .build()
+                .provideMatkulAdapterPresenter();
     }
 
     @NonNull
@@ -99,7 +105,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
                 public void onClick(View view) {
                     int jumlahKosong = mataKuliah.getJumlahKosong();
                     mataKuliah.setJumlahKosong(jumlahKosong+1);
-                    sqliteHelper.updateJumlahKosongMataKuliah(mataKuliah);
+                    matkulAdapterPresenter.updateJumlahKosongMataKuliah(mataKuliah);
                     notifyDataSetChanged();
                     dialog.dismiss();
                 }
@@ -129,7 +135,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
         private void deleteMataKuliah() {
             int position = getLayoutPosition();
             MataKuliah mataKuliah = listMataKuliah.get(position);
-            if (sqliteHelper.deleteMataKuliah(mataKuliah) > 0) {
+            if (matkulAdapterPresenter.deleteMataKuliah(mataKuliah.getId()) > 0) {
                 listMataKuliah.remove(position);
                 Toast.makeText(view.getContext(),
                         mataKuliah.getNama() + " terhapus",

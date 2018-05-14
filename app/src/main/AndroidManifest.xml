@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/NoAppBar">
         <activity
-            android:name=".activity.HomeActivity">
+            android:name=".view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SplashScreenActivity"></activity>
+        <activity android:name=".view.SplashScreenActivity"></activity>
     </application>
 
 </manifest>
