@@ -32,6 +32,11 @@ public class HomePresenterImpl implements HomeContract.Presenter {
 
     @Override
     public long saveMataKuliah(String id, String namaMataKuliah, int jumlahKosong) {
-        return homeInteractor.saveMataKuliah(new MataKuliah(id, namaMataKuliah, jumlahKosong));
+        try{
+            Integer.parseInt(namaMataKuliah);
+            return -2;
+        } catch (Exception ex){
+            return homeInteractor.saveMataKuliah(new MataKuliah(id, namaMataKuliah, jumlahKosong));
+        }
     }
 }

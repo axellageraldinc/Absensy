@@ -51,4 +51,15 @@ public class HomeActivityTest {
         onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(allOf(withText("KID"),
                 hasSibling(withText("2"))))));
     }
+
+    @Test
+    public void inputNamaMataKuliahAngka() {
+        onView(withId(R.id.btnAddMataKuliah)).perform(click());
+        onView(withId(R.id.txtInputMataKuliah)).check(matches(isDisplayed()));
+        onView(withId(R.id.txtInputMataKuliah)).perform(typeText("12345"), closeSoftKeyboard());
+        onView(withId(R.id.txtInputJumlahKosong)).perform(typeText("0"), closeSoftKeyboard());
+        onView(withId(R.id.btnSimpanMataKuliah)).perform(click());
+        onView(withText("Nama mata kuliah tidak boleh angka")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+    }
 }

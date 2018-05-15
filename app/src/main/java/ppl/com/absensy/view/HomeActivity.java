@@ -94,12 +94,14 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                                 UUID.randomUUID().toString(),
                                 txtInputNamaMataKuliah.getText().toString(),
                                 Integer.parseInt(txtInputJumlahKosongMataKuliah.getText().toString()));
-                if(status!=-1){
+                if(status!=-1 && status!=-2){
                     resetInputMataKuliah();
                     dialogAddMataKuliah.dismiss();
                     showDaftarMataKuliah(homePresenter.getAllMataKuliahFromDatabase());
-                } else{
+                } else if(status==-1){
                     Toast.makeText(HomeActivity.this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(this, "Nama mata kuliah tidak boleh angka", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
