@@ -4,10 +4,8 @@ import android.content.Context;
 
 import javax.inject.Inject;
 
-import ppl.com.absensy.component.DaggerMatkulAdapterInteractorComponent;
 import ppl.com.absensy.contract.MatkulAdapterContract;
 import ppl.com.absensy.model.MataKuliah;
-import ppl.com.absensy.module.MatkulAdapterInteractorModule;
 
 public class MatkulAdapterPresenterImpl implements MatkulAdapterContract.Presenter {
 
@@ -15,12 +13,13 @@ public class MatkulAdapterPresenterImpl implements MatkulAdapterContract.Present
     private MatkulAdapterContract.Interactor matkulAdapterInteractor;
 
     @Inject
-    public MatkulAdapterPresenterImpl(Context context) {
+    public MatkulAdapterPresenterImpl(Context context, MatkulAdapterContract.Interactor matkulAdapterInteractor) {
         this.context = context;
-        matkulAdapterInteractor = DaggerMatkulAdapterInteractorComponent.builder()
-                .matkulAdapterInteractorModule(new MatkulAdapterInteractorModule(context))
-                .build()
-                .provideMatkulAdapterInteractor();
+        this.matkulAdapterInteractor = matkulAdapterInteractor;
+//        matkulAdapterInteractor = DaggerMatkulAdapterInteractorComponent.builder()
+//                .matkulAdapterInteractorModule(new MatkulAdapterInteractorModule(context))
+//                .build()
+//                .provideMatkulAdapterInteractor();
     }
 
     @Override

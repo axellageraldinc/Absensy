@@ -19,6 +19,7 @@ import java.util.UUID;
 import ppl.com.absensy.R;
 import ppl.com.absensy.component.DaggerHomePresenterComponent;
 import ppl.com.absensy.contract.HomeContract;
+import ppl.com.absensy.interactor.HomeInteractorImpl;
 import ppl.com.absensy.model.MataKuliah;
 import ppl.com.absensy.module.HomePresenterModule;
 
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         setContentView(R.layout.activity_home);
 
         homePresenter = DaggerHomePresenterComponent.builder()
-                .homePresenterModule(new HomePresenterModule(HomeActivity.this))
+                .homePresenterModule(new HomePresenterModule(new HomeInteractorImpl(HomeActivity.this)))
                 .build()
                 .provideHomePresenter();
 

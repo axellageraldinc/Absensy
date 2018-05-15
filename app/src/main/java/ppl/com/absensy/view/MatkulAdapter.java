@@ -19,6 +19,7 @@ import java.util.List;
 import ppl.com.absensy.R;
 import ppl.com.absensy.component.DaggerMatkulAdapterPresenterComponent;
 import ppl.com.absensy.contract.MatkulAdapterContract;
+import ppl.com.absensy.interactor.MatkulAdapterInteractorImpl;
 import ppl.com.absensy.model.MataKuliah;
 import ppl.com.absensy.module.MatkulAdapterPresenterModule;
 
@@ -30,7 +31,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
     public MatkulAdapter(List<MataKuliah> listMataKuliah, Context context) {
         this.listMataKuliah = listMataKuliah;
         matkulAdapterPresenter = DaggerMatkulAdapterPresenterComponent.builder()
-                .matkulAdapterPresenterModule(new MatkulAdapterPresenterModule(context))
+                .matkulAdapterPresenterModule(new MatkulAdapterPresenterModule(context, new MatkulAdapterInteractorImpl(context)))
                 .build()
                 .provideMatkulAdapterPresenter();
     }

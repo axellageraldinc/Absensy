@@ -1,22 +1,21 @@
 package ppl.com.absensy.module;
 
-import android.content.Context;
-
 import dagger.Module;
 import dagger.Provides;
+import ppl.com.absensy.contract.HomeContract;
 
 @Module
 public class HomePresenterModule {
 
-    private Context context;
+    private HomeContract.Interactor homeInteractor;
 
-    public HomePresenterModule(Context context) {
-        this.context = context;
+    public HomePresenterModule(HomeContract.Interactor homeInteractor) {
+        this.homeInteractor = homeInteractor;
     }
 
     @Provides
-    public Context provideHomeContext(){
-        return context;
+    public HomeContract.Interactor provideHomeInteractor(){
+        return homeInteractor;
     }
 
 }
