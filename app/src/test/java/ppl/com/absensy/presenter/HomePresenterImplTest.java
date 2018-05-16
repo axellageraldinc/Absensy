@@ -63,11 +63,13 @@ public class HomePresenterImplTest {
 
     @Test
     public void checkMataKuliah() {
-        MataKuliah mataKuliah = new MataKuliah("1", "makul", 0);
+        MataKuliah mataKuliah =
+                new MataKuliah("1", "makul", 0);
         homePresenter.saveMataKuliah(mataKuliah.getId(), mataKuliah.getNama(),
                 mataKuliah.getJumlahKosong());
-        List<MataKuliah> mataKuliahs = homePresenter.getAllMataKuliahFromDatabase();
-        assertThat(mataKuliahs.get(0).getNama(), equalTo(mataKuliah.getNama()));
+        boolean isMatkulNameExists =
+                homePresenter.isMatkulNameExists(mataKuliah.getNama());
+        assertThat(isMatkulNameExists, equalTo(true));
     }
 
 }

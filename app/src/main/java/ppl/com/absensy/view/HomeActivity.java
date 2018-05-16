@@ -90,22 +90,34 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                 dialogAddMataKuliah.show();
                 break;
             case R.id.btnSimpanMataKuliah:
-                long status = homePresenter
-                        .saveMataKuliah(
-                                UUID.randomUUID().toString(),
-                                txtInputNamaMataKuliah.getText().toString(),
-                                Integer.parseInt(txtInputJumlahKosongMataKuliah.getText().toString()));
-                if(status!=-1 && status!=-2){
-                    resetInputMataKuliah();
-                    dialogAddMataKuliah.dismiss();
-                    showDaftarMataKuliah(homePresenter.getAllMataKuliahFromDatabase());
-                    Toast.makeText(this, "Berhasil menambahkan mata kuliah", Toast.LENGTH_SHORT).show();
-                } else if(status==-1){
-                    Toast.makeText(this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(this, "Nama mata kuliah tidak boleh angka", Toast.LENGTH_SHORT).show();
-                }
+                simpanMataKuliah();
                 break;
         }
+    }
+
+    private void simpanMataKuliah() {
+        if (!isMatkulNameExists()) {
+            long status = homePresenter
+                    .saveMataKuliah(
+                            UUID.randomUUID().toString(),
+                            txtInputNamaMataKuliah.getText().toString(),
+                            Integer.parseInt(txtInputJumlahKosongMataKuliah.getText().toString()));
+            if(status!=-1 && status!=-2) {
+                resetInputMataKuliah();
+                dialogAddMataKuliah.dismiss();
+                showDaftarMataKuliah(homePresenter.getAllMataKuliahFromDatabase());
+                Toast.makeText(this, "Berhasil menyimpan mata kuliah baru", Toast.LENGTH_SHORT).show();
+            } else if(status==-1) {
+                Toast.makeText(this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Nama mata kuliah tidak boleh angka", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Terdapat mata kuliah yang sama", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isMatkulNameExists() {
+        return homePresenter.isMatkulNameExists(txtInputNamaMataKuliah.getText().toString());
     }
 }
