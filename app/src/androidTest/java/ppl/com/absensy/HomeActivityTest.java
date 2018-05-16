@@ -12,6 +12,7 @@ import ppl.com.absensy.view.HomeActivity;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItem;
@@ -21,6 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class HomeActivityTest {
@@ -62,4 +64,13 @@ public class HomeActivityTest {
         onView(withText("Nama mata kuliah tidak boleh angka")).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
     }
+
+    @Test
+    public void batalMenghapusMataKuliah () {
+        onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), longClick()));
+        onView(withText("Delete")).check(matches(isDisplayed()));
+        onView(withText("Delete")).perform(click());
+        onView(withId(R.id.recyclerViewMataKuliah)).check(matches(not(hasDescendant(withText("KID")))));
+    }
+
 }
