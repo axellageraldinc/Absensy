@@ -30,4 +30,9 @@ public class HomePresenterImpl implements HomeContract.Presenter {
             return homeInteractor.saveMataKuliah(new MataKuliah(id, namaMataKuliah, jumlahKosong));
         }
     }
+
+    @Override
+    public boolean isMatkulNameExists(String namaMataKuliah) {
+        return homeInteractor.isMatkulNameExists(new MataKuliah("", namaMataKuliah, 0));
+    }
 }

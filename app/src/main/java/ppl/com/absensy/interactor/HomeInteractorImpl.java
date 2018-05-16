@@ -62,6 +62,21 @@ public class HomeInteractorImpl extends SQLiteOpenHelper implements HomeContract
     }
 
     @Override
+    public boolean isMatkulNameExists(MataKuliah mataKuliah) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String whereClause = NAMA_MATA_KULIAH + "=?";
+        Cursor cursor = db.query(TABLE_MATA_KULIAH,
+                null,
+                whereClause,
+                new String[]{ mataKuliah.getNama() },
+                null,
+                null,
+                null);
+        int result = cursor.getColumnCount();
+        return result != 0;
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         String queryCreateTableMatakuliah = "CREATE TABLE IF NOT EXISTS " +
                 TABLE_MATA_KULIAH + "(" +

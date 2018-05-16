@@ -11,9 +11,11 @@ public interface HomeContract {
     interface Interactor{
         long saveMataKuliah(MataKuliah mataKuliah);
         List<MataKuliah> getAllMataKuliah();
+        boolean isMatkulNameExists(MataKuliah mataKuliah);
     }
     interface Presenter{
         List<MataKuliah> getAllMataKuliahFromDatabase();
         long saveMataKuliah(String id, String namaMataKuliah, int jumlahKosong);
+        boolean isMatkulNameExists(String namaMataKuliah);
     }
 }
