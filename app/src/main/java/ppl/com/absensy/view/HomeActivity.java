@@ -99,8 +99,9 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
                     resetInputMataKuliah();
                     dialogAddMataKuliah.dismiss();
                     showDaftarMataKuliah(homePresenter.getAllMataKuliahFromDatabase());
+                    Toast.makeText(this, "Berhasil menambahkan mata kuliah", Toast.LENGTH_SHORT).show();
                 } else if(status==-1){
-                    Toast.makeText(HomeActivity.this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Gagal menambahkan mata kuliah baru", Toast.LENGTH_SHORT).show();
                 } else{
                     Toast.makeText(this, "Nama mata kuliah tidak boleh angka", Toast.LENGTH_SHORT).show();
                 }
