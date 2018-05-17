@@ -52,17 +52,12 @@ public class HomeActivityTest {
     }
 
     @Test
-    public void bukaAplikasiMunculMataKuliahTerdaftarDiList(){
-        onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(withText("KID"))));
-    }
-
-    @Test
     public void absenMataKuliah(){
         onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), click()));
         onView(withId(R.id.btnAddAbsen)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAddAbsen)).perform(click());
         onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(allOf(withText("KID"),
-                hasSibling(withText("2"))))));
+                hasSibling(withText("1"))))));
     }
 
     @Test
@@ -77,7 +72,7 @@ public class HomeActivityTest {
     }
 
     @Test
-    public void batalMenghapusMataKuliah () {
+    public void menghapusMataKuliah () {
         onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), longClick()));
         onView(withText("Delete")).check(matches(isDisplayed()));
         onView(withText("Delete")).perform(click());
