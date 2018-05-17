@@ -72,7 +72,9 @@ public class HomeInteractorImpl extends SQLiteOpenHelper implements HomeContract
                 null,
                 null,
                 null);
-        int result = cursor.getColumnCount();
+        int result = cursor.getCount();
+        db.close();
+        cursor.close();
         return result != 0;
     }
 
