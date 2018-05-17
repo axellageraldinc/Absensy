@@ -41,6 +41,17 @@ public class HomeActivityTest {
     }
 
     @Test
+    public void checkMataKuliahDiDatabase(){
+        onView(withId(R.id.btnAddMataKuliah)).perform(click());
+        onView(withId(R.id.txtInputMataKuliah)).check(matches(isDisplayed()));
+        onView(withId(R.id.txtInputMataKuliah)).perform(typeText("KID"), closeSoftKeyboard());
+        onView(withId(R.id.txtInputJumlahKosong)).perform(typeText("0"), closeSoftKeyboard());
+        onView(withId(R.id.btnSimpanMataKuliah)).perform(click());
+        onView(withText("Terdapat mata kuliah yang sama")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
     public void bukaAplikasiMunculMataKuliahTerdaftarDiList(){
         onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(withText("KID"))));
     }
@@ -86,4 +97,5 @@ public class HomeActivityTest {
         onView(withText("Batal")).perform(click());
         onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(withText("KID"))));
     }
+  
 }
