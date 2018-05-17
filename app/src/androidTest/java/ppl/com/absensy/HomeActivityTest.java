@@ -75,7 +75,7 @@ public class HomeActivityTest {
 
     @Test
     public void testDialogMunculLongPressMatkul () {
-        onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), longClick()))
+        onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), longClick()));
         onView(withText("Delete")).check(matches(isDisplayed()));
     }
 
@@ -84,6 +84,6 @@ public class HomeActivityTest {
         onView(withId(R.id.recyclerViewMataKuliah)).perform(actionOnItem(hasDescendant(withText("KID")), longClick()));
         onView(withText("Delete")).check(matches(isDisplayed()));
         onView(withText("Batal")).perform(click());
-        onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(withText("KID")))));
+        onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(withText("KID"))));
     }
 }
