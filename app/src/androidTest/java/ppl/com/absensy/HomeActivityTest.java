@@ -57,7 +57,7 @@ public class HomeActivityTest {
         onView(withId(R.id.btnAddAbsen)).check(matches(isDisplayed()));
         onView(withId(R.id.btnAddAbsen)).perform(click());
         onView(withId(R.id.recyclerViewMataKuliah)).check(matches(hasDescendant(allOf(withText("KID"),
-                hasSibling(withText("1"))))));
+                hasSibling(withText("Jumlah kosong : 1"))))));
     }
 
     @Test

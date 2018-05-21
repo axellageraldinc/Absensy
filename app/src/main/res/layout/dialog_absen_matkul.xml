@@ -7,6 +7,15 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/txtNamaMakulDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Nama Makul"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"/>
+
+    <TextView
         android:id="@+id/txtJumlahKosong"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

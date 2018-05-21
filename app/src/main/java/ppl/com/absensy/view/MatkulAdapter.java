@@ -49,7 +49,7 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
         MataKuliah mataKuliah = listMataKuliah.get(position);
         holder.txtId.setText(mataKuliah.getNama());
         holder.txtMatkul.setText(mataKuliah.getNama());
-        holder.txtKosong.setText(String.valueOf(mataKuliah.getJumlahKosong()));
+        holder.txtKosong.setText("Jumlah kosong : " + String.valueOf(mataKuliah.getJumlahKosong()));
     }
 
     @Override
@@ -97,9 +97,11 @@ public class MatkulAdapter extends RecyclerView.Adapter<MatkulAdapter.ViewHolder
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.dialog_absen_matkul);
             dialog.setCancelable(true);
+            TextView txtNamaMakul = dialog.findViewById(R.id.txtNamaMakulDialog);
             TextView txtJumlahAbsen = dialog.findViewById(R.id.txtJumlahKosong);
             Button btnAddAbsen = dialog.findViewById(R.id.btnAddAbsen);
             dialog.setTitle(mataKuliah.getNama());
+            txtNamaMakul.setText(mataKuliah.getNama());
             txtJumlahAbsen.setText("Kosong : " + String.valueOf(mataKuliah.getJumlahKosong()));
             btnAddAbsen.setOnClickListener(new View.OnClickListener() {
                 @Override
