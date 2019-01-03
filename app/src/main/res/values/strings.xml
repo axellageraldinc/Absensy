@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">absensy</string>
+
+    <string name="subject">subject</string>
+
+    <string name="setting">setting</string>
+    <string name="settings">Settings</string>
+    <string name="save">SAVE</string>
+    <string name="delete">Delete</string>
+
+    <string-array name="options">
+        <item>Lihat detail absen saya pada kuliah ini</item>
+        <item>Edit kuliah ini</item>
+        <item>Absen kuliah ini</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+    </string-array>
 </resources>
