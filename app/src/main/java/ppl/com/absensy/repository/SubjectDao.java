@@ -19,7 +19,7 @@ public interface SubjectDao {
     @Update
     void update(Subject subject);
 
-    @Query(value = "select * from subjects")
+    @Query(value = "select * from subjects order by class_schedule asc")
     Single<List<Subject>> findAll();
 
     @Delete
