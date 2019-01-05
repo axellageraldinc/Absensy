@@ -1,5 +1,6 @@
 package ppl.com.absensy.home.recyclerviewsubject;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -8,16 +9,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import ppl.com.absensy.R;
 import ppl.com.absensy.base.RecyclerViewHelper;
+import ppl.com.absensy.helper.DayNamingHelper;
 import ppl.com.absensy.model.Subject;
 
 public class RecyclerViewSubjectAdapter
         extends RecyclerView.Adapter<RecyclerViewSubjectAdapter.RecyclerViewSubjectViewHolder>
         implements RecyclerViewHelper<Subject> {
+
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     private List<Subject> subjectList = new ArrayList<>();
     private Listener listener;
@@ -39,7 +47,11 @@ public class RecyclerViewSubjectAdapter
 
         recyclerViewSubjectViewHolder.bind(subject);
 
+        String dayNameInBahasaIndonesia = DayNamingHelper.dayNameInBahasaIndonesia(Integer.parseInt(CLASS_DAY_FORMAT.format(subject.getClassSchedule())));
+        String classScheduleTime = CLASS_TIME_FORMAT.format(subject.getClassSchedule());
+
         recyclerViewSubjectViewHolder.tvSubjectName.setText(subject.getName());
+        recyclerViewSubjectViewHolder.tvSubjectClassSchedule.setText(String.format("%s %s", dayNameInBahasaIndonesia, classScheduleTime));
         recyclerViewSubjectViewHolder.tvSubjectAbsenceAmount.setText(String.format("Kosong : %s", String.valueOf(subject.getAbsenceAmount())));
     }
 
@@ -62,12 +74,14 @@ public class RecyclerViewSubjectAdapter
     class RecyclerViewSubjectViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout parentItem;
         private TextView tvSubjectName;
+        private TextView tvSubjectClassSchedule;
         private TextView tvSubjectAbsenceAmount;
 
         public RecyclerViewSubjectViewHolder(@NonNull View itemView) {
             super(itemView);
             parentItem = itemView.findViewById(R.id.parentItem);
             tvSubjectName = itemView.findViewById(R.id.tvSubjectName);
+            tvSubjectClassSchedule = itemView.findViewById(R.id.tvSubjectClassSchedule);
             tvSubjectAbsenceAmount = itemView.findViewById(R.id.tvSubjectAbsenceAmount);
         }
 
