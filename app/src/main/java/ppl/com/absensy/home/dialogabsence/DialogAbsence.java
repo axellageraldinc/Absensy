@@ -29,7 +29,7 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
     public static DialogAbsence newInstance(Subject subject) {
         DialogAbsence dialogAbsence = new DialogAbsence();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(SUBJECT_KEY, subject);
+        bundle.putParcelable(SUBJECT_KEY, subject);
         dialogAbsence.setArguments(bundle);
         return dialogAbsence;
     }
@@ -50,7 +50,7 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
         btnAbsence.setOnClickListener(this);
 
         if (getArguments() != null) {
-            Subject subject = (Subject) getArguments().getSerializable(SUBJECT_KEY);
+            Subject subject = getArguments().getParcelable(SUBJECT_KEY);
             this.subject = subject;
             tvSubjectName.setText(String.format("Kuliah : %s", subject.getName()));
             tvSubjectAbsenceAmount.setText(String.format("Kosong %s kali", String.valueOf(subject.getAbsenceAmount())));

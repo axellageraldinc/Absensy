@@ -12,7 +12,7 @@ public interface SubmitSubjectContract {
     interface Presenter extends BasePresenter {
         void saveSubject(Subject subject);
 
-        void updateSubject(Subject subject);
+        void updateSubject(Subject originalSubject, Subject subject);
 
         void deleteSubject(Subject subject);
     }

@@ -8,6 +8,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import ppl.com.absensy.model.Subject;
+import ppl.com.absensy.reminder.ClassReminder;
 import ppl.com.absensy.repository.SubjectDao;
 
 public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
@@ -15,13 +16,16 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
     private CompositeDisposable compositeDisposable;
     private SubmitSubjectContract.View view;
     private SubjectDao subjectDao;
+    private ClassReminder classReminder;
 
     public SubmitSubjectPresenter(CompositeDisposable compositeDisposable,
                                   SubmitSubjectContract.View view,
-                                  SubjectDao subjectDao) {
+                                  SubjectDao subjectDao,
+                                  ClassReminder classReminder) {
         this.compositeDisposable = compositeDisposable;
         this.view = view;
         this.subjectDao = subjectDao;
+        this.classReminder = classReminder;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
                     @Override
                     public void onComplete() {
                         view.showToast("Berhasil menambahkan " + subject.getName());
+                        classReminder.setReminder(subject);
                         view.moveToPreviousPage();
                     }
 
@@ -54,7 +59,7 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
     }
 
     @Override
-    public void updateSubject(final Subject subject) {
+    public void updateSubject(final Subject originalSubject, final Subject subject) {
         Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
@@ -72,6 +77,8 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
                     @Override
                     public void onComplete() {
                         view.showToast("Berhasil mengubah informasi mata kuliah " + subject.getName());
+                        classReminder.cancelExistingReminder(originalSubject);
+                        classReminder.setReminder(subject);
                         view.moveToPreviousPage();
                     }
 
@@ -100,6 +107,7 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
 
                     @Override
                     public void onComplete() {
+                        classReminder.cancelExistingReminder(subject);
                         view.moveToPreviousPage();
                     }
 

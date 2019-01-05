@@ -8,6 +8,8 @@
     <string name="save">SAVE</string>
     <string name="delete">Delete</string>
 
+    <string name="notification_channel_name_class_reminder">ClassReminder</string>
+
     <string-array name="options">
         <item>Lihat detail absen saya pada kuliah ini</item>
         <item>Edit kuliah ini</item>

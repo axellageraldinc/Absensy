@@ -23,7 +23,7 @@ public class DialogChooseOption extends BaseDialog {
     public static DialogChooseOption newInstance(Subject subject) {
         DialogChooseOption dialogChooseOption = new DialogChooseOption();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(SUBJECT_KEY, subject);
+        bundle.putParcelable(SUBJECT_KEY, subject);
         dialogChooseOption.setArguments(bundle);
         return dialogChooseOption;
     }
@@ -40,7 +40,7 @@ public class DialogChooseOption extends BaseDialog {
         setCancelable(true);
 
         if (getArguments() != null) {
-            this.subject = (Subject) getArguments().getSerializable(SUBJECT_KEY);
+            this.subject = getArguments().getParcelable(SUBJECT_KEY);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -2,6 +2,7 @@ package ppl.com.absensy.app;
 
 import android.app.Application;
 
+import ppl.com.absensy.reminder.ClassReminderModule;
 import ppl.com.absensy.repository.RepositoryModule;
 
 public class AbsensyApp extends Application {
@@ -14,6 +15,7 @@ public class AbsensyApp extends Application {
         absensyAppComponent = DaggerAbsensyAppComponent.builder()
                 .absensyAppModule(new AbsensyAppModule(this))
                 .repositoryModule(new RepositoryModule())
+                .classReminderModule(new ClassReminderModule())
                 .build();
     }
 

@@ -45,7 +45,7 @@ public class AbsenceDetailsActivity extends BaseActivity implements AbsenceDetai
                 .inject(this);
 
         Intent intent = getIntent();
-        subject = (Subject) intent.getSerializableExtra(getResources().getString(R.string.subject));
+        subject = intent.getParcelableExtra(getResources().getString(R.string.subject));
 
         rvAbsenceDetails = findViewById(R.id.rvAbsenceDetails);
         rvAbsenceDetails.setLayoutManager(new LinearLayoutManager(this));

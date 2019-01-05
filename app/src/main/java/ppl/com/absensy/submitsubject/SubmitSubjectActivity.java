@@ -77,7 +77,7 @@ public class SubmitSubjectActivity
         btnSubmitSubject.setOnClickListener(this);
 
         Intent intent = getIntent();
-        Subject subject = (Subject) intent.getSerializableExtra(getResources().getString(R.string.subject));
+        Subject subject = intent.getParcelableExtra(getResources().getString(R.string.subject));
         if (subject != null) {
             this.subject = subject;
             etSubjectName.setText(subject.getName());
@@ -155,7 +155,7 @@ public class SubmitSubjectActivity
                             .absenceAmount(this.subject.getAbsenceAmount())
                             .classSchedule(CALENDAR.getTime())
                             .build();
-                    presenter.updateSubject(subject);
+                    presenter.updateSubject(this.subject, subject);
                 }
                 break;
             case R.id.tvClassTime:

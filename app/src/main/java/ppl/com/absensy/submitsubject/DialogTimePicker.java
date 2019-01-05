@@ -15,10 +15,6 @@ public class DialogTimePicker extends DialogFragment implements TimePickerDialog
     private static final String HOUR_KEY = "hour";
     private static final String MINUTE_KEY = "minute";
 
-    public interface Listener {
-        void OnTimeSet(long classTime);
-    }
-
     public static DialogTimePicker newInstance(int hour, int minute) {
         DialogTimePicker dialogTimePicker = new DialogTimePicker();
         Bundle bundle = new Bundle();
@@ -54,5 +50,9 @@ public class DialogTimePicker extends DialogFragment implements TimePickerDialog
             long classTime = calendar.getTimeInMillis();
             listener.OnTimeSet(classTime);
         }
+    }
+
+    public interface Listener {
+        void OnTimeSet(long classTime);
     }
 }
