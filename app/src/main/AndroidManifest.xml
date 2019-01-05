@@ -2,22 +2,41 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ppl.com.absensy">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
+        android:name=".app.AbsensyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/NoAppBar">
-        <activity
-            android:name=".view.HomeActivity">
+        <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.SplashScreenActivity"></activity>
+        <activity android:name=".base.BaseActivity" />
+        <activity android:name=".submitsubject.SubmitSubjectActivity" />
+        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".absencedetails.AbsenceDetailsActivity"></activity>
+
+        <receiver
+            android:name=".boot.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".reminder.AlarmReceiver" />
+
+        <service
+            android:name=".boot.BootService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

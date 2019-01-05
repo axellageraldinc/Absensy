@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="508px" height="508px" viewBox="0 0 508 508" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>graduation</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="graduation" fill-rule="nonzero">
+            <circle id="Oval" fill="#1CC3DA" cx="254" cy="254" r="254"></circle>
+            <path d="M256.8,177.6 L156.8,177.6 L156.8,297.2 C221.2,280 257.2,321.2 257.2,321.2 C257.2,321.2 293.2,280 357.6,297.2 L357.6,177.6 L256.8,177.6 Z" id="Shape" fill="#2B3B4E"></path>
+            <polygon id="Shape" fill="#F1543F" points="252.8 349.2 233.2 349.2 233.2 398 252.8 381.6 272.4 398 272.4 349.2"></polygon>
+            <path d="M418.8,277.6 C309.2,292 197.2,292 87.2,277.6 L87.2,277.6 L87.2,374.4 L87.2,374.4 C196.8,360 308.8,360 418.8,374.4 L418.8,374.4 L418.8,277.6 L418.8,277.6 Z" id="Shape" fill="#E6E9EE"></path>
+            <path d="M275.6,288.4 L275.6,364 C268,364 260.4,364 253.2,364 C245.6,364 238,364 230.8,364 L230.8,288.4 C245.6,288.8 260.4,288.8 275.6,288.4 Z" id="Shape" fill="#FF7058"></path>
+            <polygon id="Shape" fill="#F9B54C" points="409.2 304 368 304 376.8 269.2 400.4 269.2"></polygon>
+            <rect id="Rectangle-path" fill="#FF7058" x="384.8" y="177.6" width="8" height="103.2"></rect>
+            <polygon id="Shape" fill="#324A5E" points="256.8 110 92.8 177.6 256.8 244.8 420.8 177.6"></polygon>
+            <circle id="Oval" fill="#FFD05B" cx="388.8" cy="269.2" r="16.4"></circle>
+        </g>
+    </g>
+</svg>
