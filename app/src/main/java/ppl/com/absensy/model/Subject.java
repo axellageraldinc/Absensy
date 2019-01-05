@@ -47,6 +47,7 @@ public class Subject implements Parcelable {
         id = in.readString();
         name = in.readString();
         absenceAmount = in.readInt();
+        classSchedule = new Date(in.readLong());
     }
 
     @Override
@@ -59,5 +60,6 @@ public class Subject implements Parcelable {
         dest.writeString(id);
         dest.writeString(name);
         dest.writeInt(absenceAmount);
+        dest.writeLong(classSchedule.getTime());
     }
 }
