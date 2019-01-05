@@ -1,3 +1,13 @@
+<p align="center">
+  <img 
+       src="https://github.com/axellageraldinc/android-Absensy/blob/development/AppLogo.png" 
+       width="120" 
+       title="Absensy Logo"
+       alt="Absensy Logo">
+  <br/>
+  <b>Absensy</b>
+</p>
+
 # What is Absensy?
 Android app used to help you keep track of college attendance.
 
@@ -5,6 +15,20 @@ Android app used to help you keep track of college attendance.
 This app was originally developed for college's project. The team member was me (Axell), [Alman](https://github.com/almanalfaruq), [Farras](https://github.com/FarrasMuhammad), [Raufi](https://github.com/raufimusaddiq), and [Adin](https://github.com/bayuadinh).
 
 My faculty has a regulation about college attendance, it requires us to attend each class at least 70% of all class meetings. It means that if there are 14 meetings each class, then we must attend each class at least 10 of them or we won't be permitted to take exam.
+
+# App Preview
+<p align="center">
+  <img 
+       src="https://github.com/axellageraldinc/android-Absensy/blob/development/AbsenceDialog.png" 
+       width="350" 
+       title="Absence Dialog"
+       alt="Absence Dialog">
+  <img 
+       src="https://github.com/axellageraldinc/android-Absensy/blob/development/Notification.png" 
+       width="350" 
+       title="Notification"
+       alt="Notification">
+</p>
 
 # Technology Stack
 * [MVP (Model-View-Presenter)](https://en.wikipedia.org/wiki/Model–view–presenter) - Architecture
