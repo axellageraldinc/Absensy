@@ -41,7 +41,6 @@ public class AlarmService extends JobService {
         AbsensyAppComponent absensyAppComponent = ((AbsensyApp) getApplication()).getAbsensyAppComponent();
         DaggerAlarmServiceComponent.builder()
                 .absensyAppComponent(absensyAppComponent)
-                .alarmServiceModule(new AlarmServiceModule())
                 .build()
                 .inject(this);
 

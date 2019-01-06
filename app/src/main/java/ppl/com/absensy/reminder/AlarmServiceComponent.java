@@ -5,8 +5,7 @@ import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.di.ServiceScope;
 
 @ServiceScope
-@Component(dependencies = {AbsensyAppComponent.class},
-        modules = {AlarmServiceModule.class})
+@Component(dependencies = {AbsensyAppComponent.class})
 public interface AlarmServiceComponent {
     void inject(AlarmService alarmService);
 }

@@ -7,11 +7,14 @@ import ppl.com.absensy.reminder.ClassReminderModule;
 import ppl.com.absensy.repository.AppDatabase;
 import ppl.com.absensy.repository.RepositoryModule;
 import ppl.com.absensy.repository.SettingSharedPreferences;
+import ppl.com.absensy.repository.SubjectDao;
 
 @ApplicationScope
 @Component(modules = {AbsensyAppModule.class, RepositoryModule.class, ClassReminderModule.class})
 public interface AbsensyAppComponent {
     AppDatabase appDatabase();
+
+    SubjectDao subjectDao();
 
     SettingSharedPreferences settingSharedPreferences();
 

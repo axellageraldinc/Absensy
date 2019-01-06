@@ -5,8 +5,7 @@ import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.di.ServiceScope;
 
 @ServiceScope
-@Component(dependencies = {AbsensyAppComponent.class},
-        modules = {BootServiceModule.class})
+@Component(dependencies = {AbsensyAppComponent.class})
 public interface BootServiceComponent {
     void inject(BootService bootService);
 }

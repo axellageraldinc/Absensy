@@ -20,6 +20,12 @@ public class RepositoryModule {
 
     @Provides
     @ApplicationScope
+    public SubjectDao providesSubjectDao(Application application) {
+        return providesAppDatabase(application).subjectDao();
+    }
+
+    @Provides
+    @ApplicationScope
     public SettingSharedPreferences providesSettingSharedPreferences(Application application) {
         return new SettingSharedPreferencesImpl(application);
     }

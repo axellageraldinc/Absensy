@@ -35,7 +35,6 @@ public class BootService extends JobService {
         AbsensyAppComponent absensyAppComponent = ((AbsensyApp) getApplication()).getAbsensyAppComponent();
         DaggerBootServiceComponent.builder()
                 .absensyAppComponent(absensyAppComponent)
-                .bootServiceModule(new BootServiceModule())
                 .build()
                 .inject(this);
 
