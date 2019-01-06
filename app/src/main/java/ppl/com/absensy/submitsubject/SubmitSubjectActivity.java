@@ -187,7 +187,7 @@ public class SubmitSubjectActivity
     }
 
     @Override
-    public void OnTimeSet(long classTime) {
+    public void onTimeSet(long classTime) {
         Date classTimeDate = new Date(classTime);
         tvClassTime.setText(classTimeFormat.format(classTimeDate));
         classHour = Integer.parseInt(hourFormat.format(classTimeDate));

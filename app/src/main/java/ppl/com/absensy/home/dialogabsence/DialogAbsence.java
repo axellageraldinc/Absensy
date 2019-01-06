@@ -64,7 +64,7 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
                 Listener listener = (Listener) getActivity();
                 if (listener != null) {
                     Log.d(TAG, "onAbsence OK");
-                    listener.OnAbsence(subject);
+                    listener.onAbsence(subject);
                 }
                 break;
             default:
@@ -73,6 +73,6 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
     }
 
     public interface Listener {
-        void OnAbsence(Subject subject);
+        void onAbsence(Subject subject);
     }
 }

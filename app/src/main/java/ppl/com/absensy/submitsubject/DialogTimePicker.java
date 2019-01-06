@@ -48,11 +48,11 @@ public class DialogTimePicker extends DialogFragment implements TimePickerDialog
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             long classTime = calendar.getTimeInMillis();
-            listener.OnTimeSet(classTime);
+            listener.onTimeSet(classTime);
         }
     }
 
     public interface Listener {
-        void OnTimeSet(long classTime);
+        void onTimeSet(long classTime);
     }
 }

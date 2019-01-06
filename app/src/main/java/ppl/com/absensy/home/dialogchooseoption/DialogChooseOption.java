@@ -52,17 +52,17 @@ public class DialogChooseOption extends BaseDialog {
                 switch (which) {
                     case 0: // view absence details
                         if (listener != null) {
-                            listener.OnOptionClick(subject, Option.VIEW_ABSENCE_DETAILS);
+                            listener.onOptionClick(subject, Option.VIEW_ABSENCE_DETAILS);
                         }
                         break;
                     case 1: // edit
                         if (listener != null) {
-                            listener.OnOptionClick(subject, Option.EDIT);
+                            listener.onOptionClick(subject, Option.EDIT);
                         }
                         break;
                     case 2: // absen
                         if (listener != null) {
-                            listener.OnOptionClick(subject, Option.ABSENCE);
+                            listener.onOptionClick(subject, Option.ABSENCE);
                         }
                         break;
                     default:
@@ -81,6 +81,6 @@ public class DialogChooseOption extends BaseDialog {
     }
 
     public interface Listener {
-        void OnOptionClick(Subject subject, Option option);
+        void onOptionClick(Subject subject, Option option);
     }
 }

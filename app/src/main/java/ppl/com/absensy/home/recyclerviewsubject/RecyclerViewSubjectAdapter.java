@@ -68,7 +68,7 @@ public class RecyclerViewSubjectAdapter
     }
 
     public interface Listener {
-        void OnItemClick(Subject subject);
+        void onItemClick(Subject subject);
     }
 
     class RecyclerViewSubjectViewHolder extends RecyclerView.ViewHolder {
@@ -89,7 +89,7 @@ public class RecyclerViewSubjectAdapter
             parentItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.OnItemClick(subject);
+                    listener.onItemClick(subject);
                 }
             });
         }

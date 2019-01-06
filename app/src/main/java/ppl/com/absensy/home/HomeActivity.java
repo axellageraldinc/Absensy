@@ -120,13 +120,13 @@ public class HomeActivity
     }
 
     @Override
-    public void OnItemClick(Subject subject) {
+    public void onItemClick(Subject subject) {
         DialogFragment dialogChooseOption = DialogChooseOption.newInstance(subject);
         dialogChooseOption.show(getSupportFragmentManager(), DIALOG_CHOOSE_OPTION_TAG);
     }
 
     @Override
-    public void OnOptionClick(Subject subject, DialogChooseOption.Option option) {
+    public void onOptionClick(Subject subject, DialogChooseOption.Option option) {
         Intent intent;
         switch (option) {
             case VIEW_ABSENCE_DETAILS:
@@ -149,7 +149,7 @@ public class HomeActivity
     }
 
     @Override
-    public void OnAbsence(Subject subject) {
+    public void onAbsence(Subject subject) {
         presenter.absenceSubject(subject);
     }
 }
