@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +28,7 @@ import ppl.com.absensy.R;
 import ppl.com.absensy.app.AbsensyApp;
 import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.base.BaseActivity;
+import ppl.com.absensy.helper.ValidationConstant;
 import ppl.com.absensy.model.Subject;
 
 public class SubmitSubjectActivity
@@ -53,11 +57,14 @@ public class SubmitSubjectActivity
     private int classHour = 7;
     private int classMinute = 15;
     private boolean isClassTimeChosen = false;
+    private AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_subject);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
         AbsensyAppComponent absensyAppComponent = ((AbsensyApp) getApplication()).getAbsensyAppComponent();
 
@@ -68,6 +75,7 @@ public class SubmitSubjectActivity
                 .inject(this);
 
         etSubjectName = findViewById(R.id.etSubjectName);
+        awesomeValidation.addValidation(etSubjectName, ValidationConstant.NOT_EMPTY_PATTERN, ValidationConstant.NOT_EMPTY_MESSAGE);
         spinnerClassDay = findViewById(R.id.spinnerClassDay);
         spinnerClassDay.setOnItemSelectedListener(this);
         setSpinnerClassDayContents();
@@ -139,23 +147,25 @@ public class SubmitSubjectActivity
                     showToast("Harap pilih jadwal kelas");
                     return;
                 }
-                setClassSchedule();
-                if (subject == null) {
-                    Subject subject = Subject.builder()
-                            .id(UUID.randomUUID().toString())
-                            .name(etSubjectName.getText().toString())
-                            .absenceAmount(0) // default is 0
-                            .classSchedule(CALENDAR.getTime())
-                            .build();
-                    presenter.saveSubject(subject);
-                } else {
-                    Subject subject = Subject.builder()
-                            .id(this.subject.getId())
-                            .name(etSubjectName.getText().toString())
-                            .absenceAmount(this.subject.getAbsenceAmount())
-                            .classSchedule(CALENDAR.getTime())
-                            .build();
-                    presenter.updateSubject(this.subject, subject);
+                if (awesomeValidation.validate()) {
+                    setClassSchedule();
+                    if (subject == null) {
+                        Subject subject = Subject.builder()
+                                .id(UUID.randomUUID().toString())
+                                .name(etSubjectName.getText().toString())
+                                .absenceAmount(0) // default is 0
+                                .classSchedule(CALENDAR.getTime())
+                                .build();
+                        presenter.saveSubject(subject);
+                    } else {
+                        Subject subject = Subject.builder()
+                                .id(this.subject.getId())
+                                .name(etSubjectName.getText().toString())
+                                .absenceAmount(this.subject.getAbsenceAmount())
+                                .classSchedule(CALENDAR.getTime())
+                                .build();
+                        presenter.updateSubject(this.subject, subject);
+                    }
                 }
                 break;
             case R.id.tvClassTime:

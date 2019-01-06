@@ -50,6 +50,9 @@ dependencies {
     // FIREBASE JOB DISPATCHER
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 
+    // AWESOME VALIDATION
+    implementation 'com.basgeekball:awesome-validation:4.2'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
