@@ -18,6 +18,8 @@ public class DayNamingHelper {
                 return "Jumat";
             case 6:
                 return "Sabtu";
+            case 7:
+                return "Minggu";
             default:
                 return "";
         }

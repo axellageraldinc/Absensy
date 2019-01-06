@@ -32,8 +32,6 @@ public class ClassReminderImpl implements ClassReminder {
     public void cancelExistingReminder(Subject uneditedSubject) {
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.SUBJECT_ID_KEY, uneditedSubject.getId());
-        intent.putExtra(AlarmReceiver.SUBJECT_NAME_KEY, uneditedSubject.getName());
-        intent.putExtra(AlarmReceiver.SUBJECT_ABSENCE_AMOUNT_KEY, uneditedSubject.getAbsenceAmount());
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(alarmIntent);
     }
@@ -43,13 +41,10 @@ public class ClassReminderImpl implements ClassReminder {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(CLASS_DAY_FORMAT.format(subject.getClassSchedule())) + 1);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(HOUR_FORMAT.format(subject.getClassSchedule())));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(MINUTE_FORMAT.format(subject.getClassSchedule())));
-        calendar.add(Calendar.MINUTE, Integer.parseInt(MINUTE_FORMAT.format(subject.getClassSchedule())) - 30); // set the alarm 30 minutes advance
+        calendar.set(Calendar.MINUTE, Integer.parseInt(MINUTE_FORMAT.format(subject.getClassSchedule())) - 30); // set the alarm 30 minutes advance
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.SUBJECT_ID_KEY, subject.getId());
-        intent.putExtra(AlarmReceiver.SUBJECT_NAME_KEY, subject.getName());
-        intent.putExtra(AlarmReceiver.SUBJECT_ABSENCE_AMOUNT_KEY, subject.getAbsenceAmount());
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),

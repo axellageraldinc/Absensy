@@ -22,6 +22,9 @@ public interface SubjectDao {
     @Query(value = "select * from subjects order by class_schedule asc")
     Single<List<Subject>> findAll();
 
+    @Query(value = "select * from subjects where id = :subjectId")
+    Single<Subject> findById(String subjectId);
+
     @Delete
     void delete(Subject subject);
 }

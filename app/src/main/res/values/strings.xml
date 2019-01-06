@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Absensy</string>
 
+    <string name="database_name">absensy</string>
+
     <string name="subject">subject</string>
 
     <string name="setting">setting</string>
@@ -23,5 +25,6 @@
         <item>Kamis</item>
         <item>Jumat</item>
         <item>Sabtu</item>
+        <item>Minggu</item>
     </string-array>
 </resources>

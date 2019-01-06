@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "ppl.com.absensy"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -46,6 +46,9 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
+
+    // FIREBASE JOB DISPATCHER
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 
     testImplementation 'junit:junit:4.12'
 }

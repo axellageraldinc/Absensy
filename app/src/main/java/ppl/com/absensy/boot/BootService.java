@@ -1,10 +1,9 @@
 package ppl.com.absensy.boot;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
+
+import com.firebase.jobdispatcher.JobParameters;
+import com.firebase.jobdispatcher.JobService;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import ppl.com.absensy.model.Subject;
 import ppl.com.absensy.reminder.ClassReminder;
 import ppl.com.absensy.repository.SubjectDao;
 
-public class BootService extends Service {
+public class BootService extends JobService {
 
     @Inject
     SubjectDao subjectDao;
@@ -44,7 +43,7 @@ public class BootService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public boolean onStartJob(JobParameters job) {
         compositeDisposable.add(subjectDao.findAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,18 +61,17 @@ public class BootService extends Service {
                     }
                 })
         );
-        return super.onStartCommand(intent, flags, startId);
+        return false;
     }
 
-    @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public boolean onStopJob(JobParameters job) {
+        compositeDisposable.dispose();
+        return false;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
     }
 }
