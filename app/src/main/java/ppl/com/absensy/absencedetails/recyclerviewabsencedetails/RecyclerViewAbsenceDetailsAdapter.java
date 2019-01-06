@@ -19,7 +19,7 @@ import ppl.com.absensy.model.AbsenceDetail;
 public class RecyclerViewAbsenceDetailsAdapter extends RecyclerView.Adapter<RecyclerViewAbsenceDetailsAdapter.AbsenceDetailsViewHolder> implements RecyclerViewHelper<AbsenceDetail> {
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     private List<AbsenceDetail> absenceDetailList = new ArrayList<>();
 

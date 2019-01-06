@@ -37,14 +37,14 @@ public class SubmitSubjectActivity
 
     private static final String DIALOG_TIME_PICKER_TAG = "dialogTimePicker";
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
+    private SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
-    private static final Calendar CALENDAR = Calendar.getInstance();
+    private SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
+    private Calendar CALENDAR = Calendar.getInstance();
 
     @Inject
     SubmitSubjectContract.Presenter presenter;

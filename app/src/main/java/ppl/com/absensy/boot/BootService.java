@@ -68,9 +68,4 @@ public class BootService extends JobService {
         compositeDisposable.dispose();
         return false;
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

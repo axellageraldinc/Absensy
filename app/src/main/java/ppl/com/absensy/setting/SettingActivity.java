@@ -6,12 +6,16 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+
 import javax.inject.Inject;
 
 import ppl.com.absensy.R;
 import ppl.com.absensy.app.AbsensyApp;
 import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.base.BaseActivity;
+import ppl.com.absensy.helper.ValidationConstant;
 import ppl.com.absensy.model.Setting;
 
 public class SettingActivity extends BaseActivity implements SettingContract.View {
@@ -21,10 +25,14 @@ public class SettingActivity extends BaseActivity implements SettingContract.Vie
     private EditText etMaxAbsenceAmount;
     private Switch swSubjectReminder;
 
+    private AwesomeValidation awesomeValidation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
         AbsensyAppComponent absensyAppComponent = ((AbsensyApp) getApplication()).getAbsensyAppComponent();
 
@@ -35,6 +43,7 @@ public class SettingActivity extends BaseActivity implements SettingContract.Vie
                 .inject(this);
 
         etMaxAbsenceAmount = findViewById(R.id.etMaxAbsenceAmount);
+        awesomeValidation.addValidation(etMaxAbsenceAmount, ValidationConstant.NOT_EMPTY_PATTERN, ValidationConstant.NOT_EMPTY_MESSAGE);
         swSubjectReminder = findViewById(R.id.swSubjectReminder);
 
         setToolbarTitle(getResources().getString(R.string.settings), true);
@@ -62,12 +71,14 @@ public class SettingActivity extends BaseActivity implements SettingContract.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveSettings:
-                Setting setting = Setting.builder()
-                        .maxAbsenceAmount(Integer.parseInt(etMaxAbsenceAmount.getText().toString()))
-                        .subjectReminder(swSubjectReminder.isChecked())
-                        .build();
-                presenter.saveSettings(setting);
-                return true;
+                if (awesomeValidation.validate()) {
+                    Setting setting = Setting.builder()
+                            .maxAbsenceAmount(Integer.parseInt(etMaxAbsenceAmount.getText().toString()))
+                            .subjectReminder(swSubjectReminder.isChecked())
+                            .build();
+                    presenter.saveSettings(setting);
+                    return true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

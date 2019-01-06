@@ -14,11 +14,11 @@ import ppl.com.absensy.model.Subject;
 public class ClassReminderImpl implements ClassReminder {
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
+    private SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
+    private SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
 
     private AlarmManager alarmManager;
     private Context context;

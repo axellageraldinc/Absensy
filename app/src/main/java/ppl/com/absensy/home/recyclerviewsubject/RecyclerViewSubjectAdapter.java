@@ -23,9 +23,9 @@ public class RecyclerViewSubjectAdapter
         implements RecyclerViewHelper<Subject> {
 
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private static final SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     private List<Subject> subjectList = new ArrayList<>();
     private Listener listener;
