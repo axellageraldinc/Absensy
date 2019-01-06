@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -28,6 +29,8 @@ import ppl.com.absensy.repository.SubjectDao;
 
 public class AlarmService extends JobService {
 
+    private static final String TAG = AlarmService.class.getName();
+
     @Inject
     SettingSharedPreferences settingSharedPreferences;
     @Inject
@@ -48,15 +51,15 @@ public class AlarmService extends JobService {
     }
 
     private String getNotificationContent(int subjectAbsenceAmount) {
-        double classAbsencePercentage = subjectAbsenceAmount / settingSharedPreferences.findAll().getMaxAbsenceAmount() * 100;
+        double classAbsencePercentage = (double) subjectAbsenceAmount / settingSharedPreferences.findAll().getMaxAbsenceAmount() * 100;
         if (classAbsencePercentage >= 0 && classAbsencePercentage < 25)
-            return "Aku gak nyuruh skip kuliah lho, FYI aja baru kosong " + String.valueOf(subjectAbsenceAmount);
+            return "Aku gak nyuruh skip kuliah lho, FYI aja baru kosong " + subjectAbsenceAmount;
         if (classAbsencePercentage >= 25 && classAbsencePercentage < 50)
-            return "Kosong " + String.valueOf(subjectAbsenceAmount) + ", demi kemajuan bangsa, masuk kelas aja :)";
+            return "Kosong " + subjectAbsenceAmount + ", demi kemajuan bangsa, masuk kelas aja :)";
         if (classAbsencePercentage >= 50 && classAbsencePercentage < 75)
-            return "Mendingan kamu masuk aja deh, udah kosong " + String.valueOf(subjectAbsenceAmount);
+            return "Mendingan kamu masuk aja deh, udah kosong " + subjectAbsenceAmount;
         if (classAbsencePercentage >= 75)
-            return "Sangat disarankan masuk kalo ini, udah kosong " + String.valueOf(subjectAbsenceAmount);
+            return "Sangat disarankan masuk kalo ini, udah kosong " + subjectAbsenceAmount;
         return "";
     }
 
@@ -75,7 +78,7 @@ public class AlarmService extends JobService {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "Error onStartJob AlarmService : " + e.getMessage());
                     }
                 })
         );

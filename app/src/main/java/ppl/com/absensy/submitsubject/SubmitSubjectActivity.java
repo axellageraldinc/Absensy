@@ -37,14 +37,14 @@ public class SubmitSubjectActivity
 
     private static final String DIALOG_TIME_PICKER_TAG = "dialogTimePicker";
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat classDayFormat = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat classTimeFormat = new SimpleDateFormat("HH:mm");
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
+    private SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
-    private Calendar CALENDAR = Calendar.getInstance();
+    private SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
+    private Calendar calendar = Calendar.getInstance();
 
     @Inject
     SubmitSubjectContract.Presenter presenter;
@@ -85,15 +85,14 @@ public class SubmitSubjectActivity
         btnSubmitSubject.setOnClickListener(this);
 
         Intent intent = getIntent();
-        Subject subject = intent.getParcelableExtra(getResources().getString(R.string.subject));
+        subject = intent.getParcelableExtra(getResources().getString(R.string.subject));
         if (subject != null) {
-            this.subject = subject;
             etSubjectName.setText(subject.getName());
             etSubjectName.setSelection(subject.getName().length());
-            classDay = Integer.parseInt(CLASS_DAY_FORMAT.format(subject.getClassSchedule())) - 1;
-            tvClassTime.setText(CLASS_TIME_FORMAT.format(subject.getClassSchedule()));
-            classHour = Integer.parseInt(HOUR_FORMAT.format(subject.getClassSchedule()));
-            classMinute = Integer.parseInt(MINUTE_FORMAT.format(subject.getClassSchedule()));
+            classDay = Integer.parseInt(classDayFormat.format(subject.getClassSchedule())) - 1;
+            tvClassTime.setText(classTimeFormat.format(subject.getClassSchedule()));
+            classHour = Integer.parseInt(hourFormat.format(subject.getClassSchedule()));
+            classMinute = Integer.parseInt(minuteFormat.format(subject.getClassSchedule()));
             setToolbarTitle(subject.getName(), true);
             isClassTimeChosen = true;
         } else
@@ -150,21 +149,21 @@ public class SubmitSubjectActivity
                 if (awesomeValidation.validate()) {
                     setClassSchedule();
                     if (subject == null) {
-                        Subject subject = Subject.builder()
+                        subject = Subject.builder()
                                 .id(UUID.randomUUID().toString())
                                 .name(etSubjectName.getText().toString())
                                 .absenceAmount(0) // default is 0
-                                .classSchedule(CALENDAR.getTime())
+                                .classSchedule(calendar.getTime())
                                 .build();
                         presenter.saveSubject(subject);
                     } else {
-                        Subject subject = Subject.builder()
-                                .id(this.subject.getId())
+                        Subject editedsubject = Subject.builder()
+                                .id(subject.getId())
                                 .name(etSubjectName.getText().toString())
-                                .absenceAmount(this.subject.getAbsenceAmount())
-                                .classSchedule(CALENDAR.getTime())
+                                .absenceAmount(subject.getAbsenceAmount())
+                                .classSchedule(calendar.getTime())
                                 .build();
-                        presenter.updateSubject(this.subject, subject);
+                        presenter.updateSubject(subject, editedsubject);
                     }
                 }
                 break;
@@ -178,21 +177,21 @@ public class SubmitSubjectActivity
     }
 
     private void setClassSchedule() {
-        CALENDAR.set(Calendar.DAY_OF_WEEK, classDay);
+        calendar.set(Calendar.DAY_OF_WEEK, classDay);
         String classTime = tvClassTime.getText().toString();
         String[] classTimeHourAndMinute = classTime.split(":");
         String classTimeHour = classTimeHourAndMinute[0];
         String classTimeMinute = classTimeHourAndMinute[1];
-        CALENDAR.set(Calendar.HOUR_OF_DAY, Integer.parseInt(classTimeHour));
-        CALENDAR.set(Calendar.MINUTE, Integer.parseInt(classTimeMinute));
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(classTimeHour));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(classTimeMinute));
     }
 
     @Override
     public void OnTimeSet(long classTime) {
         Date classTimeDate = new Date(classTime);
-        tvClassTime.setText(CLASS_TIME_FORMAT.format(classTimeDate));
-        classHour = Integer.parseInt(HOUR_FORMAT.format(classTimeDate));
-        classMinute = Integer.parseInt(MINUTE_FORMAT.format(classTimeDate));
+        tvClassTime.setText(classTimeFormat.format(classTimeDate));
+        classHour = Integer.parseInt(hourFormat.format(classTimeDate));
+        classMinute = Integer.parseInt(minuteFormat.format(classTimeDate));
         isClassTimeChosen = true;
     }
 

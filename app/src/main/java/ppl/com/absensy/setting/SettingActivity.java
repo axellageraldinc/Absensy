@@ -77,8 +77,8 @@ public class SettingActivity extends BaseActivity implements SettingContract.Vie
                             .subjectReminder(swSubjectReminder.isChecked())
                             .build();
                     presenter.saveSettings(setting);
-                    return true;
                 }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

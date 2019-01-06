@@ -19,7 +19,7 @@ import ppl.com.absensy.model.AbsenceDetail;
 public class RecyclerViewAbsenceDetailsAdapter extends RecyclerView.Adapter<RecyclerViewAbsenceDetailsAdapter.AbsenceDetailsViewHolder> implements RecyclerViewHelper<AbsenceDetail> {
 
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private List<AbsenceDetail> absenceDetailList = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class RecyclerViewAbsenceDetailsAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(@NonNull AbsenceDetailsViewHolder absenceDetailsViewHolder, int i) {
         AbsenceDetail absenceDetail = absenceDetailList.get(i);
-        absenceDetailsViewHolder.tvAbsenceDate.setText(String.format("Kamu absen pada %s", SIMPLE_DATE_FORMAT.format(absenceDetail.getAbsenceDate())));
+        absenceDetailsViewHolder.tvAbsenceDate.setText(String.format("Kamu absen pada %s", simpleDateFormat.format(absenceDetail.getAbsenceDate())));
     }
 
     @Override

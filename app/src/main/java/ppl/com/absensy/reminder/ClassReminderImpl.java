@@ -14,11 +14,11 @@ import ppl.com.absensy.model.Subject;
 public class ClassReminderImpl implements ClassReminder {
 
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat classDayFormat = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat HOUR_FORMAT = new SimpleDateFormat("HH");
+    private SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat MINUTE_FORMAT = new SimpleDateFormat("mm");
+    private SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
 
     private AlarmManager alarmManager;
     private Context context;
@@ -39,9 +39,9 @@ public class ClassReminderImpl implements ClassReminder {
     @Override
     public void setReminder(Subject subject) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(CLASS_DAY_FORMAT.format(subject.getClassSchedule())) + 1);
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(HOUR_FORMAT.format(subject.getClassSchedule())));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(MINUTE_FORMAT.format(subject.getClassSchedule())) - 30); // set the alarm 30 minutes advance
+        calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(classDayFormat.format(subject.getClassSchedule())) + 1);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourFormat.format(subject.getClassSchedule())));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(minuteFormat.format(subject.getClassSchedule())) - 30); // set the alarm 30 minutes advance
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(AlarmReceiver.SUBJECT_ID_KEY, subject.getId());

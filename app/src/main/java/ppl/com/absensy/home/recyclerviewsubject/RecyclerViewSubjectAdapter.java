@@ -23,9 +23,9 @@ public class RecyclerViewSubjectAdapter
         implements RecyclerViewHelper<Subject> {
 
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat CLASS_DAY_FORMAT = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat classDayFormat = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat CLASS_TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private SimpleDateFormat classTimeFormat = new SimpleDateFormat("HH:mm");
 
     private List<Subject> subjectList = new ArrayList<>();
     private Listener listener;
@@ -47,8 +47,8 @@ public class RecyclerViewSubjectAdapter
 
         recyclerViewSubjectViewHolder.bind(subject);
 
-        String dayNameInBahasaIndonesia = DayNamingHelper.dayNameInBahasaIndonesia(Integer.parseInt(CLASS_DAY_FORMAT.format(subject.getClassSchedule())));
-        String classScheduleTime = CLASS_TIME_FORMAT.format(subject.getClassSchedule());
+        String dayNameInBahasaIndonesia = DayNamingHelper.dayNameInBahasaIndonesia(Integer.parseInt(classDayFormat.format(subject.getClassSchedule())));
+        String classScheduleTime = classTimeFormat.format(subject.getClassSchedule());
 
         recyclerViewSubjectViewHolder.tvSubjectName.setText(subject.getName());
         recyclerViewSubjectViewHolder.tvSubjectClassSchedule.setText(String.format("%s %s", dayNameInBahasaIndonesia, classScheduleTime));

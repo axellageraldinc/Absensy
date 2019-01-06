@@ -50,8 +50,7 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
         btnAbsence.setOnClickListener(this);
 
         if (getArguments() != null) {
-            Subject subject = getArguments().getParcelable(SUBJECT_KEY);
-            this.subject = subject;
+            subject = getArguments().getParcelable(SUBJECT_KEY);
             tvSubjectName.setText(String.format("Kuliah : %s", subject.getName()));
             tvSubjectAbsenceAmount.setText(String.format("Kosong %s kali", String.valueOf(subject.getAbsenceAmount())));
         }

@@ -108,6 +108,8 @@ public class HomeActivity
                 Intent intent = new Intent(this, SubmitSubjectActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                break;
         }
     }
 
