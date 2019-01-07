@@ -24,7 +24,7 @@ import ppl.com.absensy.R;
 import ppl.com.absensy.app.AbsensyApp;
 import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.model.Subject;
-import ppl.com.absensy.repository.SettingSharedPreferences;
+import ppl.com.absensy.repository.SharedPreferencesManager;
 import ppl.com.absensy.repository.SubjectDao;
 
 public class AlarmService extends JobService {
@@ -32,7 +32,7 @@ public class AlarmService extends JobService {
     private static final String TAG = AlarmService.class.getName();
 
     @Inject
-    SettingSharedPreferences settingSharedPreferences;
+    SharedPreferencesManager sharedPreferencesManager;
     @Inject
     SubjectDao subjectDao;
 
@@ -51,7 +51,7 @@ public class AlarmService extends JobService {
     }
 
     private String getNotificationContent(int subjectAbsenceAmount) {
-        double classAbsencePercentage = (double) subjectAbsenceAmount / settingSharedPreferences.findAll().getMaxAbsenceAmount() * 100;
+        double classAbsencePercentage = (double) subjectAbsenceAmount / sharedPreferencesManager.findAllSettings().getMaxAbsenceAmount() * 100;
         if (classAbsencePercentage >= 0 && classAbsencePercentage < 25)
             return "Aku gak nyuruh skip kuliah lho, FYI aja baru kosong " + subjectAbsenceAmount;
         if (classAbsencePercentage >= 25 && classAbsencePercentage < 50)
@@ -72,7 +72,7 @@ public class AlarmService extends JobService {
                 .subscribeWith(new DisposableSingleObserver<Subject>() {
                     @Override
                     public void onSuccess(Subject subject) {
-                        if (settingSharedPreferences.findAll().isSubjectReminder())
+                        if (sharedPreferencesManager.findAllSettings().isSubjectReminder())
                             notifyUser("Jangan lupa kuliah " + subject.getName(), getNotificationContent(subject.getAbsenceAmount()));
                     }
 

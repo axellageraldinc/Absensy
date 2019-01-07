@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 import ppl.com.absensy.model.AbsenceDetail;
 import ppl.com.absensy.model.Subject;
 import ppl.com.absensy.repository.AbsenceDetailDao;
-import ppl.com.absensy.repository.SettingSharedPreferences;
+import ppl.com.absensy.repository.SharedPreferencesManager;
 import ppl.com.absensy.repository.SubjectDao;
 
 public class HomePresenter implements HomeContract.Presenter {
@@ -23,18 +23,18 @@ public class HomePresenter implements HomeContract.Presenter {
     private HomeContract.View view;
     private SubjectDao subjectDao;
     private AbsenceDetailDao absenceDetailDao;
-    private SettingSharedPreferences settingSharedPreferences;
+    private SharedPreferencesManager sharedPreferencesManager;
     private CompositeDisposable compositeDisposable;
 
     public HomePresenter(HomeContract.View view,
                          SubjectDao subjectDao,
                          AbsenceDetailDao absenceDetailDao,
-                         SettingSharedPreferences settingSharedPreferences,
+                         SharedPreferencesManager sharedPreferencesManager,
                          CompositeDisposable compositeDisposable) {
         this.view = view;
         this.subjectDao = subjectDao;
         this.absenceDetailDao = absenceDetailDao;
-        this.settingSharedPreferences = settingSharedPreferences;
+        this.sharedPreferencesManager = sharedPreferencesManager;
         this.compositeDisposable = compositeDisposable;
     }
 
@@ -59,7 +59,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void absenceSubject(final Subject subject) {
-        int maxAbsence = settingSharedPreferences.findAll().getMaxAbsenceAmount();
+        int maxAbsence = sharedPreferencesManager.findAllSettings().getMaxAbsenceAmount();
         if (subject.getAbsenceAmount() + 1 > maxAbsence)
             view.showToast("Wah kamu harus datang kuliah ini, jatah absenmu sudah habis");
         else {
