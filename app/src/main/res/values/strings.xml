@@ -14,7 +14,7 @@
 
     <string-array name="options">
         <item>Lihat detail absen saya pada kuliah ini</item>
-        <item>Edit kuliah ini</item>
+        <item>Edit/hapus kuliah ini</item>
         <item>Absen kuliah ini</item>
     </string-array>
 

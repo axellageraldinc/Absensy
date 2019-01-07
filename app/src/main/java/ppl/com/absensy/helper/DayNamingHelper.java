@@ -4,21 +4,21 @@ public class DayNamingHelper {
     private DayNamingHelper() {
     }
 
-    public static String dayNameInBahasaIndonesia(int dayIndex) {
-        switch (dayIndex) {
-            case 1:
+    public static String dayNameInBahasaIndonesia(String dayInEnglishAbbreviated) {
+        switch (dayInEnglishAbbreviated.toLowerCase()) {
+            case "mon":
                 return "Senin";
-            case 2:
+            case "tue":
                 return "Selasa";
-            case 3:
+            case "wed":
                 return "Rabu";
-            case 4:
+            case "thu":
                 return "Kamis";
-            case 5:
+            case "fri":
                 return "Jumat";
-            case 6:
+            case "sat":
                 return "Sabtu";
-            case 7:
+            case "sun":
                 return "Minggu";
             default:
                 return "";

@@ -26,7 +26,7 @@ public class RepositoryModule {
 
     @Provides
     @ApplicationScope
-    public SettingSharedPreferences providesSettingSharedPreferences(Application application) {
-        return new SettingSharedPreferencesImpl(application);
+    public SharedPreferencesManager providesSettingSharedPreferences(Application application) {
+        return new SharedPreferencesManagerImpl(application);
     }
 }

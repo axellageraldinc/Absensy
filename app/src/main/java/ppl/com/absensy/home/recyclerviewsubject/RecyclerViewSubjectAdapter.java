@@ -23,7 +23,7 @@ public class RecyclerViewSubjectAdapter
         implements RecyclerViewHelper<Subject> {
 
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat classDayFormat = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
+    private SimpleDateFormat classDayFormat = new SimpleDateFormat("E"); // abbreviated day's name (Mon, Tue, and so on)
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat classTimeFormat = new SimpleDateFormat("HH:mm");
 
@@ -47,7 +47,7 @@ public class RecyclerViewSubjectAdapter
 
         recyclerViewSubjectViewHolder.bind(subject);
 
-        String dayNameInBahasaIndonesia = DayNamingHelper.dayNameInBahasaIndonesia(Integer.parseInt(classDayFormat.format(subject.getClassSchedule())));
+        String dayNameInBahasaIndonesia = DayNamingHelper.dayNameInBahasaIndonesia(classDayFormat.format(subject.getClassSchedule()) );
         String classScheduleTime = classTimeFormat.format(subject.getClassSchedule());
 
         recyclerViewSubjectViewHolder.tvSubjectName.setText(subject.getName());
