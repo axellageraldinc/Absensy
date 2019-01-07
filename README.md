@@ -19,13 +19,24 @@ My faculty has a regulation about college attendance, it requires us to attend e
 # App Preview
 <p align="center">
   <img 
+       src="https://github.com/axellageraldinc/android-Absensy/blob/development/AddSubject.png" 
+       width="240" 
+       title="Add Subject"
+       alt="Add Subject">
+  <img 
        src="https://github.com/axellageraldinc/android-Absensy/blob/development/AbsenceDialog.png" 
-       width="350" 
+       width="240" 
        title="Absence Dialog"
        alt="Absence Dialog">
+  <br/>
+  <img 
+       src="https://github.com/axellageraldinc/android-Absensy/blob/development/AbsenceDetails.png" 
+       width="240" 
+       title="Absence Details"
+       alt="Absence Details">
   <img 
        src="https://github.com/axellageraldinc/android-Absensy/blob/development/Notification.png" 
-       width="350" 
+       width="240" 
        title="Notification"
        alt="Notification">
 </p>
