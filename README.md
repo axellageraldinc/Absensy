@@ -50,7 +50,7 @@ My faculty has a regulation about college attendance, it requires us to attend e
 * [Lombok](https://projectlombok.org) - "POJO helper" Library (Helps generate getter&setter methods, builder pattern, etc
 
 # Main Features
-1. Take notes on every class's absence
+1. Take notes on every class' absence
 2. Reminds user about the user's absence 30 minutes before the class start
 
 # Acknowledgements
