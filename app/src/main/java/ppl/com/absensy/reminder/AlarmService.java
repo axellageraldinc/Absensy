@@ -92,6 +92,7 @@ public class AlarmService extends JobService {
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_notification))
                 .setContentTitle(title)
                 .setContentText(content)
+                .setVibrate(new long[] { 500, 1000, 1000, 500 }) // I don't actually know how to interpret this vibration array :/
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;

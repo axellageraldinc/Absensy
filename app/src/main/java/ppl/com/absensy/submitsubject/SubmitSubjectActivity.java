@@ -19,7 +19,6 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -37,25 +36,16 @@ public class SubmitSubjectActivity
 
     private static final String DIALOG_TIME_PICKER_TAG = "dialogTimePicker";
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat classDayFormat = new SimpleDateFormat("u"); // Day number of week (1 = Monday, ..., 7 = Sunday)
-    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat classTimeFormat = new SimpleDateFormat("HH:mm");
-    @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
-    @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
     private Calendar calendar = Calendar.getInstance();
 
     @Inject
     SubmitSubjectContract.Presenter presenter;
+    private TextView tvClassTime;
     private EditText etSubjectName;
     private Spinner spinnerClassDay;
-    private TextView tvClassTime;
     private Subject subject;
 
-    private int classDay = 0;
-    private int classHour = 7;
-    private int classMinute = 15;
     private boolean isClassTimeChosen = false;
     private AwesomeValidation awesomeValidation;
 
@@ -86,18 +76,19 @@ public class SubmitSubjectActivity
 
         Intent intent = getIntent();
         subject = intent.getParcelableExtra(getResources().getString(R.string.subject));
+        calendar.set(Calendar.DAY_OF_WEEK, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 7);
+        calendar.set(Calendar.MINUTE, 15);
         if (subject != null) {
+            calendar.setTime(subject.getClassSchedule());
             etSubjectName.setText(subject.getName());
             etSubjectName.setSelection(subject.getName().length());
-            classDay = Integer.parseInt(classDayFormat.format(subject.getClassSchedule())) - 1;
             tvClassTime.setText(classTimeFormat.format(subject.getClassSchedule()));
-            classHour = Integer.parseInt(hourFormat.format(subject.getClassSchedule()));
-            classMinute = Integer.parseInt(minuteFormat.format(subject.getClassSchedule()));
             setToolbarTitle(subject.getName(), true);
             isClassTimeChosen = true;
         } else
             setToolbarTitle("Tambah mata kuliah baru", true);
-        spinnerClassDay.setSelection(classDay);
+        spinnerClassDay.setSelection(calendar.get(Calendar.DAY_OF_WEEK) - 2);
     }
 
     private void setSpinnerClassDayContents() {
@@ -147,7 +138,6 @@ public class SubmitSubjectActivity
                     return;
                 }
                 if (awesomeValidation.validate()) {
-                    setClassSchedule();
                     if (subject == null) {
                         subject = Subject.builder()
                                 .id(UUID.randomUUID().toString())
@@ -168,7 +158,7 @@ public class SubmitSubjectActivity
                 }
                 break;
             case R.id.tvClassTime:
-                DialogFragment dialogTimePicker = DialogTimePicker.newInstance(classHour, classMinute);
+                DialogFragment dialogTimePicker = DialogTimePicker.newInstance(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
                 dialogTimePicker.show(getSupportFragmentManager(), DIALOG_TIME_PICKER_TAG);
                 break;
             default:
@@ -176,22 +166,11 @@ public class SubmitSubjectActivity
         }
     }
 
-    private void setClassSchedule() {
-        calendar.set(Calendar.DAY_OF_WEEK, classDay);
-        String classTime = tvClassTime.getText().toString();
-        String[] classTimeHourAndMinute = classTime.split(":");
-        String classTimeHour = classTimeHourAndMinute[0];
-        String classTimeMinute = classTimeHourAndMinute[1];
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(classTimeHour));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(classTimeMinute));
-    }
-
     @Override
-    public void onTimeSet(long classTime) {
-        Date classTimeDate = new Date(classTime);
-        tvClassTime.setText(classTimeFormat.format(classTimeDate));
-        classHour = Integer.parseInt(hourFormat.format(classTimeDate));
-        classMinute = Integer.parseInt(minuteFormat.format(classTimeDate));
+    public void onTimeSet(int hour, int minute) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        tvClassTime.setText(classTimeFormat.format(calendar.getTime()));
         isClassTimeChosen = true;
     }
 
@@ -199,7 +178,7 @@ public class SubmitSubjectActivity
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spinnerClassDay:
-                classDay = parent.getSelectedItemPosition() + 2; // get selected item index + 2 (because every single day in Calendar is 2 indexes ahead of selected item index)
+                calendar.set(Calendar.DAY_OF_WEEK, parent.getSelectedItemPosition() + 2); // get selected item index + 2 (because every single day in Calendar is 2 indexes ahead of selected item index)
                 break;
             default:
                 break;

@@ -3,7 +3,6 @@ package ppl.com.absensy.home.dialogabsence;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import ppl.com.absensy.model.Subject;
 
 public class DialogAbsence extends BaseDialog implements View.OnClickListener {
 
-    private static final String TAG = DialogAbsence.class.getName();
-
     private static final String SUBJECT_KEY = "subject";
 
     private Subject subject;
@@ -28,6 +25,7 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
 
     public static DialogAbsence newInstance(Subject subject) {
         DialogAbsence dialogAbsence = new DialogAbsence();
+        dialogAbsence.setStyle(STYLE_NO_TITLE, 0);
         Bundle bundle = new Bundle();
         bundle.putParcelable(SUBJECT_KEY, subject);
         dialogAbsence.setArguments(bundle);
@@ -60,10 +58,8 @@ public class DialogAbsence extends BaseDialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAbsence:
-                // TODO : Instead of directly absence, give a challenge such as simple math (the difficulty level can be adjusted from settings later on) --> Alarmy app
                 Listener listener = (Listener) getActivity();
                 if (listener != null) {
-                    Log.d(TAG, "onAbsence OK");
                     listener.onAbsence(subject);
                 }
                 break;
