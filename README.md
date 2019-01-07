@@ -43,6 +43,7 @@ My faculty has a regulation about college attendance, it requires us to attend e
 
 # Technology Stack
 * [MVP (Model-View-Presenter)](https://en.wikipedia.org/wiki/Model–view–presenter) - Architecture
+* [Firebase Job Dispatcher](https://github.com/firebase/firebase-jobdispatcher-android) - Background Jobs Scheduling
 * [RxJava](https://github.com/ReactiveX/RxJava) - Asynchronous Operation
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid) - Asynchronous Operation
 * [Dagger2](https://github.com/google/dagger) - Dependency Injection
