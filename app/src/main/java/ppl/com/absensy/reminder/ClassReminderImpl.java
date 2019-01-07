@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import ppl.com.absensy.model.Subject;
 
@@ -37,6 +38,8 @@ public class ClassReminderImpl implements ClassReminder {
         intent.putExtra(AlarmReceiver.SUBJECT_ID_KEY, subject.getId());
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (calendar.before(new Date()))
+            calendar.add(Calendar.DAY_OF_WEEK, 7);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY * 7, alarmIntent); // set alarm weekly at specified day and time
     }
