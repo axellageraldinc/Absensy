@@ -34,6 +34,7 @@ public class SubmitSubjectActivity
         extends BaseActivity
         implements SubmitSubjectContract.View, View.OnClickListener, DialogTimePicker.Listener, AdapterView.OnItemSelectedListener {
 
+    private static final String CANNOT_SAVE_SUBJECT_TIME_NOT_CHOSEN_ERROR_MESSAGE = "Harap pilih jadwal kelas";
     private static final String DIALOG_TIME_PICKER_TAG = "dialogTimePicker";
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat classTimeFormat = new SimpleDateFormat("HH:mm");
@@ -87,7 +88,7 @@ public class SubmitSubjectActivity
             setToolbarTitle(subject.getName(), true);
             isClassTimeChosen = true;
         } else
-            setToolbarTitle("Tambah mata kuliah baru", true);
+            setToolbarTitle(getString(R.string.add_new_subject), true);
         spinnerClassDay.setSelection(calendar.get(Calendar.DAY_OF_WEEK) - 2);
     }
 
@@ -134,7 +135,7 @@ public class SubmitSubjectActivity
         switch (v.getId()) {
             case R.id.btnSubmitSubject:
                 if (!isClassTimeChosen) {
-                    showToast("Harap pilih jadwal kelas");
+                    showToast(CANNOT_SAVE_SUBJECT_TIME_NOT_CHOSEN_ERROR_MESSAGE);
                     return;
                 }
                 if (awesomeValidation.validate()) {

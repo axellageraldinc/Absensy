@@ -107,11 +107,11 @@ public class IntroActivity extends BaseActivity
         addSlideDots(i);
         if (i == dots.length - 1) {
             // last page. make button text to FINISH
-            tvNext.setText("FINISH");
+            tvNext.setText(R.string.finish);
             tvSkip.setVisibility(View.GONE);
         } else {
             // still pages are left
-            tvNext.setText("NEXT");
+            tvNext.setText(R.string.next);
             tvSkip.setVisibility(View.VISIBLE);
         }
     }

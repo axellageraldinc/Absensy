@@ -19,7 +19,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Absence Details"
+        android:text="@string/absence_details_title"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="16sp"
@@ -55,12 +55,12 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="160dp"
-            android:contentDescription="TODO"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_clap" />
+            app:srcCompat="@drawable/ic_clap"
+            android:contentDescription="@string/clap_never_absence" />
 
         <TextView
             android:id="@+id/textView4"
@@ -70,7 +70,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Mantapppp kamu belum pernah absen kuliah ini, \nLANJUTKAN!"
+            android:text="@string/never_absence_message"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -11,6 +11,8 @@ import ppl.com.absensy.repository.AbsenceDetailDao;
 
 public class AbsenceDetailsPresenter implements AbsenceDetailsContract.Presenter {
 
+    private static final String CANNOT_LOAD_ABSENCE_DETAILS_ERROR_MESSAGE = "Hmmm kok error ya pas mau loading detail absen\n";
+
     private AbsenceDetailsContract.View view;
     private AbsenceDetailDao absenceDetailDao;
     private CompositeDisposable compositeDisposable;
@@ -34,7 +36,7 @@ public class AbsenceDetailsPresenter implements AbsenceDetailsContract.Presenter
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Hmmm kok error ya pas mau loading detail absen\n" + e.getMessage());
+                        view.showToast(CANNOT_LOAD_ABSENCE_DETAILS_ERROR_MESSAGE + e.getMessage());
                     }
                 })
         );

@@ -33,7 +33,7 @@ public class RecyclerViewAbsenceDetailsAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(@NonNull AbsenceDetailsViewHolder absenceDetailsViewHolder, int i) {
         AbsenceDetail absenceDetail = absenceDetailList.get(i);
-        absenceDetailsViewHolder.tvAbsenceDate.setText(String.format("Kamu absen pada %s", simpleDateFormat.format(absenceDetail.getAbsenceDate())));
+        absenceDetailsViewHolder.tvAbsenceDate.setText(String.format("%s. Kamu absen pada %s", i+1, simpleDateFormat.format(absenceDetail.getAbsenceDate())));
     }
 
     @Override

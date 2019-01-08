@@ -5,6 +5,9 @@ import ppl.com.absensy.repository.SharedPreferencesManager;
 
 public class SettingPresenter implements SettingContract.Presenter {
 
+    private static final String SETTINGS_SAVED_SUCCESS_MESSAGE = "Pengaturan berhasil disimpan!";
+    private static final String CANNOT_SAVE_SETTINGS_ERROR_MESSAGE = "Oops, pengaturan gagal disimpan";
+
     private SettingContract.View view;
     private SharedPreferencesManager sharedPreferencesManager;
 
@@ -22,8 +25,8 @@ public class SettingPresenter implements SettingContract.Presenter {
     public void saveSettings(Setting setting) {
         boolean isSavingSettingsSucceeded = sharedPreferencesManager.saveSetting(setting);
         if (isSavingSettingsSucceeded)
-            view.showToast("Pengaturan berhasil disimpan!");
+            view.showToast(SETTINGS_SAVED_SUCCESS_MESSAGE);
         else
-            view.showToast("Oops, pengaturan gagal disimpan");
+            view.showToast(CANNOT_SAVE_SETTINGS_ERROR_MESSAGE);
     }
 }

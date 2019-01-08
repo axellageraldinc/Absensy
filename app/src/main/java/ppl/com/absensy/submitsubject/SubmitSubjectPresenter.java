@@ -13,6 +13,14 @@ import ppl.com.absensy.repository.SubjectDao;
 
 public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
 
+    private static final String SAVE_SUBJECT_SUCCESS_MESSAGE = "Berhasil menambahkan ";
+    private static final String EDIT_SUBJECT_SUCCESS_MESSAGE = "Berhasil mengubah informasi mata kuliah ";
+    private static final String DELETE_SUBJECT_SUCCESS_MESSAGE = "Berhasil menghapus ";
+
+    private static final String CANNOT_SAVE_SUBJECT_ERROR_MESSAGE = "Waduh, error saat mencoba menambahkan ";
+    private static final String CANNOT_EDIT_SUBJECT_ERROR_MESSAGE = "Waduh, error saat mencoba mengedit ";
+    private static final String CANNOT_DELETE_SUBJECT_ERROR_MESSAGE = "Hmmm kok gagal hapus ya :/\nError : ";
+
     private CompositeDisposable compositeDisposable;
     private SubmitSubjectContract.View view;
     private SubjectDao subjectDao;
@@ -46,14 +54,14 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        view.showToast("Berhasil menambahkan " + subject.getName());
+                        view.showToast(SAVE_SUBJECT_SUCCESS_MESSAGE + subject.getName());
                         classReminder.setReminder(subject);
                         view.moveToPreviousPage();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Waduh, error saat mencoba menambahkan " + subject.getName() + "\n" + e.getMessage());
+                        view.showToast(CANNOT_SAVE_SUBJECT_ERROR_MESSAGE + subject.getName() + "\n" + e.getMessage());
                     }
                 });
     }
@@ -76,7 +84,7 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        view.showToast("Berhasil mengubah informasi mata kuliah " + subject.getName());
+                        view.showToast(EDIT_SUBJECT_SUCCESS_MESSAGE + subject.getName());
                         classReminder.cancelExistingReminder(originalSubject);
                         classReminder.setReminder(subject);
                         view.moveToPreviousPage();
@@ -84,7 +92,7 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Waduh, error saat mencoba mengedit " + subject.getName() + "\n" + e.getMessage());
+                        view.showToast(CANNOT_EDIT_SUBJECT_ERROR_MESSAGE + subject.getName() + "\n" + e.getMessage());
                     }
                 });
     }
@@ -108,12 +116,13 @@ public class SubmitSubjectPresenter implements SubmitSubjectContract.Presenter {
                     @Override
                     public void onComplete() {
                         classReminder.cancelExistingReminder(subject);
+                        view.showToast(DELETE_SUBJECT_SUCCESS_MESSAGE + subject.getName());
                         view.moveToPreviousPage();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Hmmm kok gagal hapus ya :/\nError : " + e.getMessage());
+                        view.showToast(CANNOT_DELETE_SUBJECT_ERROR_MESSAGE + e.getMessage());
                     }
                 });
     }

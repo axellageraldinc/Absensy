@@ -1,23 +1,34 @@
 package ppl.com.absensy.home.dialogchooseoption;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.Arrays;
+
+import javax.inject.Inject;
 
 import ppl.com.absensy.R;
+import ppl.com.absensy.app.AbsensyApp;
+import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.base.BaseDialog;
 import ppl.com.absensy.model.Subject;
 
-public class DialogChooseOption extends BaseDialog {
+public class DialogChooseOption extends BaseDialog implements RecyclerViewOptionsAdapter.Listener {
 
     private static final String SUBJECT_KEY = "subject";
 
+    @Inject
+    RecyclerViewOptionsAdapter recyclerViewOptionsAdapter;
+    @Inject
+    BottomLineRecyclerViewDecoration bottomLineRecyclerViewDecoration;
     private Context context;
-
     private Subject subject;
 
     public static DialogChooseOption newInstance(Subject subject) {
@@ -34,44 +45,46 @@ public class DialogChooseOption extends BaseDialog {
         this.context = context;
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AbsensyAppComponent absensyAppComponent = ((AbsensyApp) getContext().getApplicationContext()).getAbsensyAppComponent();
+        DaggerDialogChooseOptionComponent.builder()
+                .absensyAppComponent(absensyAppComponent)
+                .dialogChooseOptionModule(new DialogChooseOptionModule(context, this))
+                .build()
+                .inject(this);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.dialog_choose_option, container);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setCancelable(true);
 
         if (getArguments() != null) {
             this.subject = getArguments().getParcelable(SUBJECT_KEY);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Mau ngapain?");
-        builder.setItems(context.getResources().getStringArray(R.array.options), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Listener listener = (Listener) getActivity();
-                switch (which) {
-                    case 0: // view absence details
-                        if (listener != null) {
-                            listener.onOptionClick(subject, Option.VIEW_ABSENCE_DETAILS);
-                        }
-                        break;
-                    case 1: // edit
-                        if (listener != null) {
-                            listener.onOptionClick(subject, Option.EDIT);
-                        }
-                        break;
-                    case 2: // absen
-                        if (listener != null) {
-                            listener.onOptionClick(subject, Option.ABSENCE);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                dismiss();
-            }
-        });
-        return builder.create();
+        RecyclerView rvOptions = view.findViewById(R.id.rvOptions);
+        rvOptions.setLayoutManager(new LinearLayoutManager(context));
+        rvOptions.addItemDecoration(bottomLineRecyclerViewDecoration);
+        rvOptions.setAdapter(recyclerViewOptionsAdapter);
+        recyclerViewOptionsAdapter.updateData(Arrays.asList(context.getResources().getStringArray(R.array.options)));
+    }
+
+    @Override
+    public void onItemClick(int chosenOptionIndex) {
+        Listener listener = (Listener) getActivity();
+        if (listener != null) {
+            listener.onOptionClick(subject, Option.values()[chosenOptionIndex]);
+            dismiss();
+        }
     }
 
     public enum Option {

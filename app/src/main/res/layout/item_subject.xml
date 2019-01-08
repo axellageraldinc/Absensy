@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tvSubjectName"
@@ -16,7 +19,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:text="Mata Kuliah"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -30,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_weight="1"
-        android:text="Jumlah Kosong"
         app:layout_constraintEnd_toEndOf="@+id/tvSubjectClassSchedule"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvSubjectClassSchedule"
@@ -42,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
-        android:text="Jadwal Kelas"
         app:layout_constraintEnd_toEndOf="@+id/tvSubjectName"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tvSubjectName"

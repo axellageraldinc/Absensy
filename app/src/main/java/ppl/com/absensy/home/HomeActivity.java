@@ -63,7 +63,7 @@ public class HomeActivity
         rvSubjects.setLayoutManager(new LinearLayoutManager(this));
         rvSubjects.setAdapter(recyclerViewSubjectAdapter);
 
-        setToolbarTitle("Home", false);
+        setToolbarTitle(getString(R.string.home), false);
     }
 
     @Override

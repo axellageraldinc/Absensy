@@ -21,6 +21,8 @@ import ppl.com.absensy.repository.SubjectDao;
 
 public class BootService extends JobService {
 
+    private static final String CANNOT_START_BOOT_SERVICE_ERROR_MESSAGE = "Hmm ada yang salah dengan BootService\nError : ";
+
     @Inject
     SubjectDao subjectDao;
     @Inject
@@ -56,7 +58,7 @@ public class BootService extends JobService {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(BootService.this, "Hmm ada yang salah dengan BootService\nError : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BootService.this, CANNOT_START_BOOT_SERVICE_ERROR_MESSAGE + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
         );

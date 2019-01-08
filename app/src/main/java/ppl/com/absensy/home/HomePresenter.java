@@ -20,6 +20,13 @@ import ppl.com.absensy.repository.SubjectDao;
 
 public class HomePresenter implements HomeContract.Presenter {
 
+    private static final String LOAD_SUBJECTS_ERROR_MESSAGE = "Hmm ada error pas loading daftar mata kuliah\n";
+    private static final String CANNOT_ABSENCE_REACHED_MAX_ERROR_MESSAGE = "Wah kamu harus datang kuliah ini, jatah absenmu sudah habis";
+    private static final String CANNOT_ABSENCE_ERROR_MESSAGE = "Hmm sepertinya sudah takdirmu untuk masuk kuliah ini :v\nError : ";
+    private static final String CANNOT_SAVE_ABSENCE_DETAIL_ERROR_MESSAGE = "Hmmm, something went wrong when saving absence details\n";
+
+    private static final String AFTER_ABSENCE_SUCCESS_MESSAGE = "Oke, jatah absenmu berkurang 1 untuk makul ini : ";
+
     private HomeContract.View view;
     private SubjectDao subjectDao;
     private AbsenceDetailDao absenceDetailDao;
@@ -51,7 +58,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Hmm ada error pas loading daftar mata kuliah\n" + e.getMessage());
+                        view.showToast(LOAD_SUBJECTS_ERROR_MESSAGE + e.getMessage());
                     }
                 })
         );
@@ -61,7 +68,7 @@ public class HomePresenter implements HomeContract.Presenter {
     public void absenceSubject(final Subject subject) {
         int maxAbsence = sharedPreferencesManager.findAllSettings().getMaxAbsenceAmount();
         if (subject.getAbsenceAmount() + 1 > maxAbsence)
-            view.showToast("Wah kamu harus datang kuliah ini, jatah absenmu sudah habis");
+            view.showToast(CANNOT_ABSENCE_REACHED_MAX_ERROR_MESSAGE);
         else {
             subject.setAbsenceAmount(subject.getAbsenceAmount() + 1);
             Completable.fromAction(new Action() {
@@ -80,7 +87,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                         @Override
                         public void onComplete() {
-                            view.showToast("Oke, jatah absenmu berkurang 1 untuk makul ini : " + subject.getName());
+                            view.showToast(AFTER_ABSENCE_SUCCESS_MESSAGE + subject.getName());
                             getAllSubjects();
                             view.dismissDialogAbsence();
                             saveAbsenceDetails(subject);
@@ -88,7 +95,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                         @Override
                         public void onError(Throwable e) {
-                            view.showToast("Hmm sepertinya sudah takdirmu untuk masuk kuliah ini :v\nError : " + e.getMessage());
+                            view.showToast(CANNOT_ABSENCE_ERROR_MESSAGE + e.getMessage());
                         }
                     });
         }
@@ -120,7 +127,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("Hmmm, something went wrong when saving absence details\n" + e.getMessage());
+                        view.showToast(CANNOT_SAVE_ABSENCE_DETAIL_ERROR_MESSAGE + e.getMessage());
                     }
                 });
     }
