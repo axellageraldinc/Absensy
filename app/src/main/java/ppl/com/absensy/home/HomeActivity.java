@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ppl.com.absensy.DialogConfirmation;
 import ppl.com.absensy.R;
 import ppl.com.absensy.absencedetails.AbsenceDetailsActivity;
 import ppl.com.absensy.app.AbsensyApp;
@@ -22,6 +23,7 @@ import ppl.com.absensy.app.AbsensyAppComponent;
 import ppl.com.absensy.base.BaseActivity;
 import ppl.com.absensy.home.dialogabsence.DialogAbsence;
 import ppl.com.absensy.home.dialogchooseoption.DialogChooseOption;
+import ppl.com.absensy.home.dialogdelete.DialogDeleteSubject;
 import ppl.com.absensy.home.recyclerviewsubject.RecyclerViewSubjectAdapter;
 import ppl.com.absensy.home.recyclerviewsubject.RecyclerViewSubjectModule;
 import ppl.com.absensy.model.Subject;
@@ -30,10 +32,18 @@ import ppl.com.absensy.submitsubject.SubmitSubjectActivity;
 
 public class HomeActivity
         extends BaseActivity
-        implements HomeContract.View, Button.OnClickListener, RecyclerViewSubjectAdapter.Listener, DialogChooseOption.Listener, DialogAbsence.Listener {
+        implements
+        HomeContract.View, Button.OnClickListener, RecyclerViewSubjectAdapter.Listener,
+        DialogChooseOption.Listener, DialogAbsence.Listener, DialogDeleteSubject.Listener,
+        DialogConfirmation.Listener {
 
     private static final String DIALOG_CHOOSE_OPTION_TAG = "dialogChooseOption";
     private static final String DIALOG_ABSENCE_TAG = "dialogAbsence";
+    private static final String DIALOG_DELETE_SUBJECT_TAG = "dialogDeleteSubject";
+
+    private static final String DIALOG_CONFIRMATION_TITLE = "Yakin?";
+    private static final String DIALOG_CONFIRMATION_BODY = "Kamu yakin mau hapus kuliah ini?";
+    private static final String DIALOG_CONFIRMATION_TAG = "dialogConfirmation";
 
     @Inject
     HomeContract.Presenter presenter;
@@ -41,6 +51,8 @@ public class HomeActivity
     RecyclerViewSubjectAdapter recyclerViewSubjectAdapter;
 
     private DialogFragment dialogAbsence;
+
+    private Subject longClickedSubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +138,13 @@ public class HomeActivity
     }
 
     @Override
+    public void onItemLongClick(Subject subject) {
+        longClickedSubject = subject;
+        DialogFragment dialogDelete = DialogDeleteSubject.newInstance();
+        dialogDelete.show(getSupportFragmentManager(), DIALOG_DELETE_SUBJECT_TAG);
+    }
+
+    @Override
     public void onOptionClick(Subject subject, DialogChooseOption.Option option) {
         Intent intent;
         switch (option) {
@@ -151,5 +170,16 @@ public class HomeActivity
     @Override
     public void onAbsence(Subject subject) {
         presenter.absenceSubject(subject);
+    }
+
+    @Override
+    public void onDelete() {
+        DialogFragment dialogConfirmation = DialogConfirmation.newInstance(DIALOG_CONFIRMATION_TITLE, DIALOG_CONFIRMATION_BODY);
+        dialogConfirmation.show(getSupportFragmentManager(), DIALOG_CONFIRMATION_TAG);
+    }
+
+    @Override
+    public void onConfirm() {
+        presenter.deleteSubject(longClickedSubject);
     }
 }

@@ -69,6 +69,7 @@ public class RecyclerViewSubjectAdapter
 
     public interface Listener {
         void onItemClick(Subject subject);
+        void onItemLongClick(Subject subject);
     }
 
     class RecyclerViewSubjectViewHolder extends RecyclerView.ViewHolder {
@@ -90,6 +91,13 @@ public class RecyclerViewSubjectAdapter
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(subject);
+                }
+            });
+            parentItem.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onItemLongClick(subject);
+                    return true;
                 }
             });
         }

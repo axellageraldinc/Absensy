@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
 import ppl.com.absensy.di.ActivityScope;
+import ppl.com.absensy.reminder.ClassReminder;
 import ppl.com.absensy.repository.AppDatabase;
 import ppl.com.absensy.repository.SharedPreferencesManager;
 
@@ -17,7 +18,7 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    public HomeContract.Presenter providesHomePresenter(AppDatabase appDatabase, SharedPreferencesManager sharedPreferencesManager) {
-        return new HomePresenter(view, appDatabase.subjectDao(), appDatabase.absenceDetailDao(), sharedPreferencesManager, new CompositeDisposable());
+    public HomeContract.Presenter providesHomePresenter(AppDatabase appDatabase, SharedPreferencesManager sharedPreferencesManager, ClassReminder classReminder) {
+        return new HomePresenter(view, appDatabase.subjectDao(), appDatabase.absenceDetailDao(), sharedPreferencesManager, classReminder, new CompositeDisposable());
     }
 }

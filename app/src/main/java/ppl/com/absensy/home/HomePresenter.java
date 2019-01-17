@@ -14,6 +14,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import ppl.com.absensy.model.AbsenceDetail;
 import ppl.com.absensy.model.Subject;
+import ppl.com.absensy.reminder.ClassReminder;
 import ppl.com.absensy.repository.AbsenceDetailDao;
 import ppl.com.absensy.repository.SharedPreferencesManager;
 import ppl.com.absensy.repository.SubjectDao;
@@ -24,24 +25,29 @@ public class HomePresenter implements HomeContract.Presenter {
     private static final String CANNOT_ABSENCE_REACHED_MAX_ERROR_MESSAGE = "Wah kamu harus datang kuliah ini, jatah absenmu sudah habis";
     private static final String CANNOT_ABSENCE_ERROR_MESSAGE = "Hmm sepertinya sudah takdirmu untuk masuk kuliah ini :v\nError : ";
     private static final String CANNOT_SAVE_ABSENCE_DETAIL_ERROR_MESSAGE = "Hmmm, something went wrong when saving absence details\n";
+    private static final String CANNOT_DELETE_SUBJECT_ERROR_MESSAGE = "Aw, gagal hapus mata kuliah";
 
     private static final String AFTER_ABSENCE_SUCCESS_MESSAGE = "Oke, jatah absenmu berkurang 1 untuk makul ini : ";
+    private static final String DELETE_SUBJECT_SUCCESS = "Berhasil hapus kuliah ";
 
     private HomeContract.View view;
     private SubjectDao subjectDao;
     private AbsenceDetailDao absenceDetailDao;
     private SharedPreferencesManager sharedPreferencesManager;
+    private ClassReminder classReminder;
     private CompositeDisposable compositeDisposable;
 
     public HomePresenter(HomeContract.View view,
                          SubjectDao subjectDao,
                          AbsenceDetailDao absenceDetailDao,
                          SharedPreferencesManager sharedPreferencesManager,
+                         ClassReminder classReminder,
                          CompositeDisposable compositeDisposable) {
         this.view = view;
         this.subjectDao = subjectDao;
         this.absenceDetailDao = absenceDetailDao;
         this.sharedPreferencesManager = sharedPreferencesManager;
+        this.classReminder = classReminder;
         this.compositeDisposable = compositeDisposable;
     }
 
@@ -99,6 +105,36 @@ public class HomePresenter implements HomeContract.Presenter {
                         }
                     });
         }
+    }
+
+    @Override
+    public void deleteSubject(final Subject subject) {
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                subjectDao.delete(subject);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        classReminder.cancelExistingReminder(subject);
+                        view.showToast(DELETE_SUBJECT_SUCCESS + subject.getName());
+                        getAllSubjects();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.showToast(CANNOT_DELETE_SUBJECT_ERROR_MESSAGE + "\n" + e.getMessage());
+                    }
+                });
     }
 
     private void saveAbsenceDetails(final Subject subject) {

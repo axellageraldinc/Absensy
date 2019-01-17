@@ -41,6 +41,10 @@
         <item>Absen kuliah ini</item>
     </string-array>
 
+    <string-array name="long_click_subject_options">
+        <item>Hapus kuliah ini</item>
+    </string-array>
+
     <string-array name="days">
         <item>Senin</item>
         <item>Selasa</item>

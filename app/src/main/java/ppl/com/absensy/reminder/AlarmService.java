@@ -4,15 +4,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -30,11 +28,8 @@ import ppl.com.absensy.repository.SubjectDao;
 public class AlarmService extends JobService {
 
     private static final String TAG = AlarmService.class.getName();
-    private static final String ABSENCE_PERCENTAGE_BELOW_25_PERCENT = "Aku gak nyuruh skip kuliah lho, FYI aja baru kosong ";
-    private static final String ABSENCE_PERCENTAGE_BELOW_50_PERCENT = "Demi kemajuan bangsa, masuk kelas aja, kosong ";
-    private static final String ABSENCE_PERCENTAGE_BELOW_75_PERCENT = "Mendingan kamu masuk aja deh, udah kosong ";
-    private static final String ABSENCE_PERCENTAGE_ABOVE_75_PERCENT = "Sangat disarankan masuk kalo ini, udah kosong ";
 
+    private static final int NOTIFICATION_ID = 14;
     private static final String NOTIFICATION_TITLE = "Jangan lupa kuliah ";
 
     private static final String CANNOT_START_ALARM_SERVICE_ERROR_MESSAGE = "Error onStartJob AlarmService : ";
@@ -44,6 +39,7 @@ public class AlarmService extends JobService {
     @Inject
     SubjectDao subjectDao;
 
+    private Uri defaultNotificationSound;
     private CompositeDisposable compositeDisposable;
 
     @Override
@@ -55,20 +51,8 @@ public class AlarmService extends JobService {
                 .build()
                 .inject(this);
 
+        defaultNotificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         compositeDisposable = new CompositeDisposable();
-    }
-
-    private String getNotificationContent(int subjectAbsenceAmount) {
-        double classAbsencePercentage = (double) subjectAbsenceAmount / sharedPreferencesManager.findAllSettings().getMaxAbsenceAmount() * 100;
-        if (classAbsencePercentage >= 0 && classAbsencePercentage < 25)
-            return ABSENCE_PERCENTAGE_BELOW_25_PERCENT + subjectAbsenceAmount;
-        if (classAbsencePercentage >= 25 && classAbsencePercentage < 50)
-            return ABSENCE_PERCENTAGE_BELOW_50_PERCENT + subjectAbsenceAmount;
-        if (classAbsencePercentage >= 50 && classAbsencePercentage < 75)
-            return ABSENCE_PERCENTAGE_BELOW_75_PERCENT + subjectAbsenceAmount;
-        if (classAbsencePercentage >= 75)
-            return ABSENCE_PERCENTAGE_ABOVE_75_PERCENT + subjectAbsenceAmount;
-        return "";
     }
 
     @Override
@@ -81,7 +65,7 @@ public class AlarmService extends JobService {
                     @Override
                     public void onSuccess(Subject subject) {
                         if (sharedPreferencesManager.findAllSettings().isSubjectReminder())
-                            notifyUser(NOTIFICATION_TITLE + subject.getName(), getNotificationContent(subject.getAbsenceAmount()));
+                            notifyUser(subject.getId(), NOTIFICATION_TITLE + subject.getName(), "Saat ini kamu kosong " + subject.getAbsenceAmount());
                     }
 
                     @Override
@@ -93,13 +77,14 @@ public class AlarmService extends JobService {
         return false;
     }
 
-    private void notifyUser(String title, String content) {
+    private void notifyUser(String subjectId, String title, String content) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, this.getResources().getString(R.string.app_name))
                 .setSmallIcon(R.drawable.ic_notification_mark)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_notification_mark))
                 .setContentTitle(title)
                 .setContentText(content)
+                .setSound(defaultNotificationSound)
                 .setVibrate(new long[] { 500, 1000, 1000, 500 }) // I don't actually know how to interpret this vibration array :/
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -108,8 +93,7 @@ public class AlarmService extends JobService {
             notificationBuilder.setChannelId(this.getResources().getString(R.string.app_name));
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        int notificationId = Integer.parseInt(new SimpleDateFormat("ddyyHHssSS", Locale.US).format(new Date()));
-        notificationManager.notify(notificationId, notificationBuilder.build());
+        notificationManager.notify(subjectId, NOTIFICATION_ID, notificationBuilder.build());
     }
 
     @Override

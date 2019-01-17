@@ -33,6 +33,7 @@ public class DialogChooseOption extends BaseDialog implements RecyclerViewOption
 
     public static DialogChooseOption newInstance(Subject subject) {
         DialogChooseOption dialogChooseOption = new DialogChooseOption();
+        dialogChooseOption.setStyle(STYLE_NO_TITLE, 0);
         Bundle bundle = new Bundle();
         bundle.putParcelable(SUBJECT_KEY, subject);
         dialogChooseOption.setArguments(bundle);

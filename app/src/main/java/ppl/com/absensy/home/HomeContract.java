@@ -17,5 +17,7 @@ public interface HomeContract {
         void getAllSubjects();
 
         void absenceSubject(Subject subject);
+
+        void deleteSubject(Subject subject);
     }
 }
