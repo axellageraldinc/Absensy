@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import ppl.com.absensy.DialogConfirmation;
 import ppl.com.absensy.R;
+import ppl.com.absensy.about.AboutActivity;
 import ppl.com.absensy.absencedetails.AbsenceDetailsActivity;
 import ppl.com.absensy.app.AbsensyApp;
 import ppl.com.absensy.app.AbsensyAppComponent;
@@ -94,8 +95,12 @@ public class HomeActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
+                Intent settingsIntent = new Intent(this, SettingActivity.class);
+                startActivity(settingsIntent);
+                return true;
+            case R.id.about:
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

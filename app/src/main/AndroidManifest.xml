@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoAppBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".about.AboutActivity"></activity>
         <activity android:name=".intro.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

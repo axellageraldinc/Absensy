@@ -34,6 +34,11 @@
     <string name="absence_details_title">Detail Absen</string>
     <string name="clap_never_absence">clap never absence</string>
     <string name="never_absence_message">Mantapppp kamu belum pernah absen kuliah ini,  LANJUTKAN!</string>
+    <string name="about">About</string>
+    <string name="what_is_absensy_text">Absensy memiliki fungsi untuk melakukan tracking terhadap jumlah absen/kosong setiap mata kuliah dengan harapan setiap mahasiswa tidak usah takut bahwa dia sudah melewati batas maksimum absen atau belum.</string>
+    <string name="how_to_develop_absensy_text">Absensy bersifat open-source, source code dari Absensy bisa diakses melalui link github di bawah ini :</string>
+    <string name="github_link">https://github.com/axellageraldinc/android-Absensy</string>
+    <string name="tentang_absensy">Tentang Absensy</string>
 
     <string-array name="options">
         <item>Lihat detail absen saya pada kuliah ini</item>
